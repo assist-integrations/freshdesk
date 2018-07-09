@@ -1,0 +1,129 @@
+<html>
+  <head>
+
+    <!-- Loading CSS Files -->
+    <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css">
+    <link rel="stylesheet" href="https://sites.zoho.com/webfonts?family=Lato:300,300i,400,400i,600,600i,700,700i,900,900i">
+    
+    <link rel="stylesheet" type="text/css" href="../styles/ticket_sidebar.css">
+  
+  </head>
+  
+  <body>
+
+    <!-- Message Template, Error Handliong -->
+    <script id="message_template" type="text/x-handlebars-template">
+        <span class="primary-message" id="primary_message">
+            {{ primary_message }}
+        </span>
+        <br />
+        <span class="secondary-message" id="secondary_message">
+            {{ secondary_message }}
+        </span>
+    </script>
+
+    <!-- Login Page Of Assist -->
+    <script id="login_template" type="text/x-handlebars-template">
+        <span class="primary-message">
+            Looks like you haven't logged into Zoho Assist.
+        </span>
+        <br />
+        <span class="secondary-message">
+            Please Login or Create an account.
+        </span>
+        <input type="button" class="primary-btn" value="Log In" onclick="AssistUtil.assistObj.openLoginPage()" />
+    </script>
+
+    <!-- app not installed page  -->
+    <script id="app_not_installed_template" type="text/x-handlebars-template">
+        <span class="primary-message">
+            Looks like you have not completed your authorization process.
+        </span>
+        <input type="button" class="primary-btn" value="Authorize" onclick="AssistUtil.assistObj.openInstallationPage()" />
+    </script>
+
+    <!-- Assist Main Template -->
+    <!-- 
+        Demo Seassion is disabled for some purpose, for enabling it just copy paste below line in first
+        
+        <div id="session_type_option_container"   class="session-type-option-container">
+           {{{ session_type_option_template }}}
+        </div>
+    -->
+    <script id="main_template" type="text/x-handlebars-template">
+        <div id="session_type_text_container"     class="session-type-text-container">
+            {{{ session_type_text_template }}}
+        </div>
+        <div id="session_schedule_btn_container"  class="session-schedule-btn-container">
+            {{{ session_schedule_btn_template }}}
+        </div>
+        <div id="get_schedule_session_link_container"  class="schedule-session-link-container">
+            <span onclick="AssistUtil.assistObj.getScheduleSession()">View Schedule Sessions</span>
+        </div>
+    </script>
+
+    <!-- Session Type Option Template -->
+    <script id="session_type_option_template" type="text/x-handlebars-template">
+        <label class="session-type-radio-text">
+            <span class="session-type-radio">
+              {{#if rs_checked}}
+                  <input type="radio" name="remote_option" onclick="AssistUtil.assistObj.selectSessionType(0)" checked />
+              {{else}}
+                  <input type="radio" name="remote_option" onclick="AssistUtil.assistObj.selectSessionType(0)" />
+              {{/if}}
+            </span>
+            <span>Access Remote Screen</span>
+        </label>
+        <label class="session-type-radio-text">
+            <span class="session-type-radio">
+                {{#unless rs_checked}}
+                    <input type="radio" name="remote_option" onclick="AssistUtil.assistObj.selectSessionType(1)" checked />
+                {{else}}
+                    <input type="radio" name="remote_option" onclick="AssistUtil.assistObj.selectSessionType(1)" />
+                {{/unless}}
+            </span>
+            <span>Share My Screen</span>
+        </label>
+    </script>
+
+    <!-- Session Type Option Text Template -->
+    <script id="session_type_text_template" type="text/x-handlebars-template">
+        {{#if rs_checked}}
+            <span class="primary-message">
+                Start a session to get connected to your remote customers instantly.
+            </span>
+        {{else}}
+            <span class="primary-message">
+                Start a session to share your computer screen for demo or training.
+            </span>
+        {{/if}}
+    </script>
+
+    <!-- Start and Schedule Button Section Template -->
+    <script id="session_schedule_btn_template" type="text/x-handlebars-template">
+        <input type="button" class="primary-btn" value="START NOW" onclick="AssistUtil.assistObj.createSupportSession()" />
+        <input type="button" class="primary-btn" value="SCHEDULE" onclick="AssistUtil.assistObj.createScheduleSession()" style="float: right;" />
+    </script>
+
+    <!-- Loading JS Files -->
+    <script src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    
+    <script type="text/javascript" src="../js/ticket_sidebar.js"></script>
+
+
+
+    <!-- Start of the Main Container Assist App Template -->
+    
+    <div class="main_container">
+        <div id="content">
+            <div class="preloader"></div>
+        </div>
+    </div>
+
+    <!-- Assist IFrame For Communication -->
+    <iframe id="post_message_iframe" width="0%" height="0%" style="border:0px;"></iframe>
+  
+  </body>
+</html>

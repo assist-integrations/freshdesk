@@ -1,0 +1,136 @@
+<html>
+  <head>
+
+    <!-- Loading CSS Files -->
+    <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css">
+    <link rel="stylesheet" href="https://sites.zoho.com/webfonts?family=Lato:300,300i,400,400i,600,600i,700,700i,900,900i">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <link rel="stylesheet" type="text/css" href="../styles/ticket_sidebar.css">
+  
+  </head>
+  
+  <body>
+
+    <!-- loading all templates -->
+
+    <!-- Available Timezone Temnplate -->
+    <script id="available_timezone_component" type="text/x-handlebars-template">
+        {{#each this}}
+            <div class="each-timezone-container" onclick="ScheduleUtil.scheduleObj.selectTimezone(&quot;{{timezone}}&quot;);">
+                <span>{{full_text_timezone}}</span>
+            </div>
+        {{/each}}
+    </script>
+
+    <!-- Get remaining time Temnplate -->
+    <script id="time_list_component" type="text/x-handlebars-template">
+        {{#each this}}
+            <div class="each-timezone-container" onclick="ScheduleUtil.scheduleObj.selectTime({{timestamp}});">
+                <span>{{full_text_time}}</span>
+            </div>
+        {{/each}}
+    </script>
+
+    <!-- Get remainder Temnplate -->
+    <script id="remainder_list_component" type="text/x-handlebars-template">
+        {{#each this}}
+            <div class="each-timezone-container" onclick="ScheduleUtil.scheduleObj.selectRemainder({{minutes}},&quot;{{full_text_remainder}}&quot;);">
+                <span>{{full_text_remainder}}</span>
+            </div>
+        {{/each}}
+    </script>
+
+    <!-- Schedule Button Section Template -->
+    <script id="schedule_main_template" type="text/x-handlebars-template">
+        <div class="schedule-container">
+            <span id="schedule_message" class="schedule-message"></span>
+            <div class="schedule-field">
+                <div>
+                    <span class="labelspan">Customer Email</span>
+                </div>
+                <br>
+                <input class="label-value" type="text" id="customer_email_id" value="{{ customer_email }}" onkeyup="ScheduleUtil.scheduleObj.selectCustomerEmail();" />
+            </div>
+            <div class="schedule-field">
+                <div>
+                    <span class="labelspan">Title</span>
+                </div>
+                <br>
+                <input class="label-value" type="text" id="ticket_subject_id" value="{{ ticket_subject }}" onkeyup="ScheduleUtil.scheduleObj.selectTicketSubject();" />
+            </div>
+            <div class="schedule-field">
+                <div>
+                    <span class="labelspan">Description</span>
+                </div>
+                <br>
+                <textarea class="label-value" id="ticket_description_id" onkeyup="ScheduleUtil.scheduleObj.selectTicketDescription();">{{ ticket_description }}</textarea>
+            </div>
+            <div class="schedule-field" id="timezone_component">
+                <div>
+                    <span class="labelspan">Timezone</span>
+                </div>
+                <br>
+                <span class="label-value date-time-dropdown" onclick="ScheduleUtil.scheduleObj.switchAvailableTimezone();">{{timezone}}</span>
+                <div class="available-timezone-container" id="available_timezone_with_filter">
+                    <span><input type="text" id="timezone_filter_input" placeholder="Search" value="" onkeyup="ScheduleUtil.scheduleObj.filterAvailableTimezones();" /></span>
+                    <div id="available_timezone"></div>
+                </div>
+            </div>
+            <div class="schedule-field">
+                <div style="float:left;width:30%;">
+                    <div>
+                        <span class="labelspan">Data</span>
+                    </div>
+                    <br>
+                    <span class="label-value date-time-dropdown" id="schedule_date_id">{{display_date}}</span>
+                </div>
+                <div style="float:left;width:30%;">
+                    <div>
+                        <span class="labelspan">Time</span>
+                    </div>
+                    <br>
+                    <span class="label-value date-time-dropdown" id="schedule_time_id" onclick="ScheduleUtil.scheduleObj.showTime();">{{display_time}}</span>
+                    <div class="available-timezone-container" id="available_time_filter" style="width:95px;">
+                        <div id="available_time"></div>
+                    </div>
+                </div>
+                <div style="float:left;width:30%;">
+                    <div>
+                        <span class="labelspan">Remainder</span>
+                    </div>
+                    <br>
+                    <span class="label-value date-time-dropdown" id="schedule_remainder_id" onclick="ScheduleUtil.scheduleObj.showRemainders();">{{remainder}}</span>
+                    <div class="available-timezone-container" id="available_remainder_filter" style="width:120px;">
+                        <div id="available_remainders"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="schedule-field" style="margin-top:30px;">
+                <input type="button" class="primary-btn" style="float:right;" value="SCEDULE" onclick="ScheduleUtil.scheduleObj.createScheduleSession()" />
+            </div>
+        </div>
+    </script>
+
+  	<!-- Loading JS Files -->
+    <script type="text/javascript" src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+    <script type="text/javascript" src="../js/schedule_session_modal.js"></script>
+
+    <div class="schedule-session-container">
+        <div id="content">
+            <div class="preloader"></div>
+        </div>
+    </div>
+
+    <!-- Assist IFrame For Communication -->
+    <iframe id="post_message_iframe" width="0%" height="0%" style="border:0px;"></iframe>
+  
+  </body>
+</html>

@@ -1,0 +1,50 @@
+<html>
+  <head>
+
+    <!-- Loading CSS Files -->
+    <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css">
+    <link rel="stylesheet" href="https://sites.zoho.com/webfonts?family=Lato:300,300i,400,400i,600,600i,700,700i,900,900i">
+
+    <link rel="stylesheet" type="text/css" href="../styles/ticket_sidebar.css">
+  
+  </head>
+  
+  <body>
+
+    <!-- Available Timezone Temnplate -->
+    <script id="schedule_session_list_component" type="text/x-handlebars-template">
+
+        <table>
+            {{#each this}}
+                <tr class="schedule-session-list-container">
+                    <td>{{owner_name}}</td>
+                    <td>{{schedule_time}}</td>
+                    <td>{{created_time}}</td>
+                    <td>{{updated_by}}</td>
+                    <td>{{updated_time}}</td>
+                </tr>
+            {{/each}}
+        </table>
+    </script>
+
+  	<!-- Loading JS Files -->
+    <script type="text/javascript" src="https://static.freshdev.io/fdk/2.0/assets/fresh_client.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+
+    <script type="text/javascript" src="../js/get_schedule_session_modal.js"></script>
+
+    <div class="schedule-session-container">
+        <div id="content">
+            <div class="preloader"></div>
+        </div>
+    </div>
+
+    <!-- Assist IFrame For Communication -->
+    <iframe id="post_message_iframe" width="0%" height="0%" style="border:0px;"></iframe>
+  
+  </body>
+</html>

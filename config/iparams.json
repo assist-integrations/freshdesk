@@ -1,0 +1,13 @@
+{
+    "domain": {
+      "display_name": "Select registered domain with Zoho",
+      "description": "Please select your domain - US(assist.zoho.com) or EU(assist.zoho.eu)",
+      "type": "radio",
+      "options": [
+        "US",
+        "EU"
+      ],
+      "default_value": "US",
+      "required": true
+    }
+}

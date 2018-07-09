@@ -1,0 +1,20 @@
+{
+  "platform-version": "2.0",
+  "product": {
+    "freshdesk": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "html/ticket_sidebar.html",
+          "icon": "images/assist-small-logo.png"
+        },
+        "ticket_top_navigation": {
+          "url": "html/ticket_top_navigation.html",
+          "icon": "images/assist-small-logo.png"
+        }
+      }
+    }
+  },
+  "whitelisted-domains": [
+    "https://assist.zoho.com"
+  ]
+}
