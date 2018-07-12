@@ -101,7 +101,7 @@ var  AssistUtil  =   {
 function AssistObj(client){
     //assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
-    this.server          =   "http://naveen-4630.csez.zohocorpin.";
+    this.server          =   "https://assist.zoho.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
     this.user_details    =   null;
@@ -310,7 +310,7 @@ AssistObj.prototype.openLoginPage   =   function(){
 AssistObj.prototype.openInstallationPage    =       function(){
 
     //init login window if closed
-    this.login_window                       =       window.open(this.server_url+"/assist#/settings/integrations","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
+    this.login_window                       =       window.open(this.server_url+"/assist#/settings/integrations/freshdesk-support","_blank");
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);
@@ -452,7 +452,7 @@ AssistObj.prototype.createSupportSessionCallback    =   function(response){
     console.log(response.success);
     console.log(response.success.representation);
     if(response.success){
-        var technicianURL                   =   response.success.representation.technician_url+"&wsg=naveen-4630.csez.zohocorpin.com&wsgPort=8081&jsChange=true";
+        var technicianURL                   =   response.success.representation.technician_url;
         this.login_window.location.href     =   technicianURL;  
     }else{
         this.showFDDangerNotification("Error occured during session creation. Please contact support@zohoassist.com.");

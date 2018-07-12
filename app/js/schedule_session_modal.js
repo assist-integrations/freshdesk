@@ -180,7 +180,7 @@ function ScheduleObj(client){
 
 	//assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
-    this.server          =   "http://naveen-4630.csez.zohocorpin.";
+    this.server          =   "https://assist.zoho.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
     this.user_details    =   null;
@@ -538,7 +538,10 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 
 	var day_diff 				= 		this.display_date.diff(now,'days');
 
-	var show_remainder_list 	= 		[];
+	var show_remainder_list 	= 		[{
+		minutes 				: 	0,
+		full_text_remainder 	:	'No remainder'
+	}];
 
 	var remainder_minutes_arr 	= 		[5,10,15,30,45];
 

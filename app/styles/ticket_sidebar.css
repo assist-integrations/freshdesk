@@ -337,3 +337,19 @@ input#timezone_filter{
     cursor      :   pointer;
 
 }
+
+.get-schedule-session-table     {
+    width       :   100%;
+}
+
+.get-schedule-session-table  th   {
+    border      :     1px solid #ccc;
+}
+
+.get-schedule-session-table  tr   {
+    border      :     1px solid #ccc;
+}
+
+.get-schedule-session-table  td   {
+    border      :     1px solid #ccc;
+}
