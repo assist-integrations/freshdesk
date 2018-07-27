@@ -530,6 +530,18 @@ ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
 ScheduleObj.prototype.showTime 	= 	function() {
 
+    var     time_now                 =       moment.tz(this.selected_timezone);
+
+    if(time_now.date()  >  this.display_date.date()  
+        && time_now.month()  >=  this.display_date.month()
+        && time_now.year()  >=  this.display_date.year()){
+
+        ScheduleUtil.showErrorMessageContainer('Schedule date is in past.');
+
+        return;
+
+    }
+
 	if(this.show_remaining_time){
 		this.hideRemainingTimeContainer();
 		return;
@@ -624,6 +636,13 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 	}
 
 	var 	now 				= 		moment.tz(this.selected_timezone);
+
+    if(now.unix()   >=  this.display_date.unix()){
+
+        ScheduleUtil.showErrorMessageContainer('Schedule time is in past.');
+
+        return;
+    }
 
 	var minutes_diff 			= 		this.display_date.diff(now,'minutes');
 
@@ -940,6 +959,15 @@ ScheduleObj.prototype.getRemainderText      =   function(minutes){
 }
 
 ScheduleObj.prototype.updateScheduleSession      =   function(){
+
+    var     now     =   moment.tz(this.selected_timezone);
+
+    if(now.unix()   >=  this.display_date.unix()){
+
+        ScheduleUtil.showErrorMessageContainer('Schedule time is in past.');
+
+        return;
+    }
 
     this.get_schedule_session_scroll_top        =       $(document).scrollTop().valueOf();
     
