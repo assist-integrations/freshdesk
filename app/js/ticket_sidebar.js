@@ -101,7 +101,7 @@ var  AssistUtil  =   {
 function AssistObj(client){
     //assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
-    this.server          =   "https://assist.zoho.";
+    this.server          =   "http://naveen-4630.csez.zohocorpin.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
     this.user_details    =   null;

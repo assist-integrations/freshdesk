@@ -338,18 +338,65 @@ input#timezone_filter{
 
 }
 
-.get-schedule-session-table     {
+.get-schedule-session-container {
+    position    :   relative;
+    float       :   left;
+    clear       :   both;
+    padding     :   15px 0;
+    border-bottom:  1px solid #ccc;
+}
+
+.get-schedule-session-ticket-details {
+    position    :   relative;
+    float       :   left;
+    font-weight :   600;
+    clear       :   both;
+    width       :   100%;
+    font-size   :   14px;  
+}
+
+.get-schedule-session-ticket-details .ticket-no-details{
+    position    :   relative;
+    float       :   left;
+    width       :   15%; 
+}
+
+.get-schedule-session-ticket-details .ticket-title-details{
+    position    :   relative;
+    float       :   left;
+    width       :   80%; 
+}
+
+.get-schedule-session-details-container {
+    position    :   relative;
+    float       :   left;
+    clear       :   both; 
     width       :   100%;
 }
 
-.get-schedule-session-table  th   {
-    border      :     1px solid #ccc;
+.get-schedule-session-details-container .key-value-container {
+    position    :   relative;
+    float       :   left;
+    clear       :   both; 
+    width       :   100%;
 }
 
-.get-schedule-session-table  tr   {
-    border      :     1px solid #ccc;
+.get-schedule-session-details-container .key-container {
+    position    :   relative;
+    float       :   left;
+    width       :   15%;
+    color       :   #999;       
 }
 
-.get-schedule-session-table  td   {
-    border      :     1px solid #ccc;
+.get-schedule-session-details-container .value-container {
+    position    :   relative;
+    float       :   left;
+    width       :   80%;
+}
+
+.get-schedule-session-manipulation-container {
+    position    :   relative;
+    float       :   left;
+    clear       :   both;
+    width       :   100%;
 }

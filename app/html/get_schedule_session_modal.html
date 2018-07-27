@@ -4,6 +4,7 @@
     <!-- Loading CSS Files -->
     <link rel="stylesheet" type="text/css" href="https://static.freshdev.io/fdk/2.0/assets/freshdesk.css">
     <link rel="stylesheet" href="https://sites.zoho.com/webfonts?family=Lato:300,300i,400,400i,600,600i,700,700i,900,900i">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     <link rel="stylesheet" type="text/css" href="../styles/ticket_sidebar.css">
   
@@ -107,7 +108,7 @@
             </div>
             <div class="schedule-field" style="margin-top:30px;">
                 <input type="button" class="primary-btn" style="float:right;" value="SCEDULE" onclick="ScheduleUtil.scheduleObj.updateScheduleSession()" />
-                <input type="button" class="primary-btn" style="float:right;" value="BACK" onclick="ScheduleUtil.scheduleObj.hideUpdateScheduleSession()" />
+                <input type="button" class="primary-btn" style="float:right; margin-right:20px;" value="BACK" onclick="ScheduleUtil.scheduleObj.hideUpdateScheduleSession()" />
             </div>
         </div>
     </script>
@@ -115,24 +116,33 @@
 
     <!-- Schedule session list Temnplate -->
     <script id="schedule_session_list_component" type="text/x-handlebars-template">
-        <table class="get-schedule-session-table">
-            <tr class="schedule-session-list-container">
-                <th>Ticket No</th>
-                <th>Schedule Time</th>
-                <th>Modified By</th>
-                <th>Modified Time</th>
-                <th></th>
-            </tr>
-            {{#each this}}
-                <tr class="schedule-session-list-container">
-                    <td>{{ticket_no}}</td>
-                    <td>{{schedule_time}}</td>
-                    <td>{{updated_by}}</td>
-                    <td>{{updated_time}}</td>
-                    <td onclick="ScheduleUtil.scheduleObj.showUpdateScheduleSession(&quot;{{schedule_id}}&quot;)">Edit</td>
-                </tr>
-            {{/each}}
-        </table>
+        {{#each this}}
+            <div class="get-schedule-session-container">
+                <div class="get-schedule-session-ticket-details">
+                    <div class="ticket-no-details">#{{ticket_no}}</div>
+                    <div class="ticket-title-details">{{ticket_title}}</div>
+                </div>
+                <div class="get-schedule-session-details-container">
+                    <div class="key-value-container">
+                        <div class="key-container">Time</div>
+                        <div class="value-container">{{schedule_time}}</div>
+                    </div>
+                    <div class="key-value-container">
+                        <div class="key-container">Technician</div>
+                        <div class="value-container">{{technician_email}}</div>
+                    </div>
+                    <div class="key-value-container">
+                        <div class="key-container">Customer</div>
+                        <div class="value-container">{{customer_email}}</div>
+                    </div>
+                </div>
+                <div class="get-schedule-session-manipulation-container">
+                    <input type="button" class="primary-btn" value="START NOW" />
+                    <div onclick="ScheduleUtil.scheduleObj.showUpdateScheduleSession(&quot;{{schedule_id}}&quot;)">EDIT</div>
+                    <div>DELETE</div>
+                </div>
+            </div>
+        {{/each}}
     </script>
 
   	<!-- Loading JS Files -->
@@ -142,6 +152,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
     <script type="text/javascript" src="../js/get_schedule_session_modal.js"></script>
 

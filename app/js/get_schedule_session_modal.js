@@ -193,7 +193,7 @@ function ScheduleObj(client){
 
 	//assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
-    this.server          =   "https://assist.zoho.";
+    this.server          =   "http://naveen-4630.csez.zohocorpin.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
     this.user_details    =   null;
@@ -218,6 +218,8 @@ function ScheduleObj(client){
     this.index 			= 	 0;
 
     //edit schedule session details
+    this.schedule_id 					= 	-1;
+    this.context_identity 				= 	null;
     this.selected_timezone				= 	moment.tz.guess();
     this.available_timezone				= 	ScheduleUtil.getAvailableTimezones();
     this.display_date					= 	null;
@@ -422,7 +424,7 @@ ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
     this.available_timezone 		= 	ScheduleUtil.getAvailableTimezones();
 
-    this.handleBasicPostMessageCallback();
+    ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
 }
 
@@ -446,7 +448,7 @@ ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
 
 	var value 						= 	$('#ticket_description_id').val();
 
-	this.ticket_desc 				= 	value;
+	this.ticket_desc 				= 	value.substr(0,450);
 
 }
 
@@ -454,7 +456,7 @@ ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
 	this.display_date 		= 		moment.tz(start.unix()*1000,this.selected_timezone);
 
-	this.handleBasicPostMessageCallback();
+	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
 }
 
@@ -540,7 +542,7 @@ ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
 	this.display_date		= 	moment.tz(timestamp,this.selected_timezone);
 
-	this.handleBasicPostMessageCallback();
+	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
 	this.show_remaining_time	= 	false;
 
@@ -634,9 +636,9 @@ ScheduleObj.prototype.selectRemainder 	= 	function(minutes,remainder_text){
 
 	this.remainder_text = 		remainder_text;
 
-	this.handleBasicPostMessageCallback();
-
 	this.show_remainder_time	= 	false;
+
+	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
 }
 
@@ -653,9 +655,12 @@ ScheduleObj.prototype.getScheduleSessionObjById 	= 	function(schedule_id){
 }
 
 ScheduleObj.prototype.showUpdateScheduleSession 	= 	function(schedule_id){
+
+	this.schedule_id 		= 		schedule_id;
+	
 	ScheduleUtil.showPreloaderComponent();
 	
-	this.getScheduleSessionDetails(schedule_id);
+	this.getScheduleSessionDetails();
 }
 
 ScheduleObj.prototype.hideUpdateScheduleSession 	= 	function(){
@@ -736,11 +741,10 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     		formatted_schedule_list.push({
     			schedule_id 		: 	this.schedule_list[index].schedule_id,
     			ticket_no 			: 	this.schedule_list[index].issue_id,
-    			owner_name 			: 	this.schedule_list[index].context_owner_name,
+    			ticket_title 		: 	this.schedule_list[index].context_title,
                 schedule_time 		: 	moment.tz(Number(this.schedule_list[index].context_schedule_time),this.schedule_list[index].context_schedule_timezone).format('MMM DD,YYYY h:mm A z'),
-                created_time		: 	moment.tz(Number(this.schedule_list[index].context_added_time),moment.tz.guess()).format('MMM DD,YYYY h:mm A z'),
-               	updated_by 			: 	this.schedule_list[index].context_edited_user_name,
-                updated_time 		: 	moment.tz(Number(this.schedule_list[index].context_edited_time),moment.tz.guess()).format('MMM DD,YYYY h:mm A z')
+                customer_email 		: 	this.schedule_list[index].context_customer_email,
+                technician_email 	: 	this.schedule_list[index].context_owner_name
             });
     	}
 
@@ -753,10 +757,10 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     }
 }
 
-ScheduleObj.prototype.getScheduleSessionDetails      =   function(schedule_id){
+ScheduleObj.prototype.getScheduleSessionDetails      =   function(){
     
     var data 		= 	{
-        schedule_id 	: 	schedule_id
+        schedule_id 	: 	this.schedule_id
     };
     
     var schedule_session_details    =   {
@@ -773,7 +777,7 @@ ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(respon
 
     	var schedule_obj 				= 		response.success.representation;
 
-    	console.log(schedule_obj);
+    	this.context_identity 			= 		schedule_obj.context_identity;
 
     	this.customer_email 			= 		schedule_obj.context_customer_email;
 
@@ -788,7 +792,6 @@ ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(respon
     	this.remainder 					= 		schedule_obj.context_schedule_reminder;
 
     	this.remainder_text 			= 		this.getRemainderText(this.remainder);
-
 
     	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
@@ -836,8 +839,9 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
         notes 		 	: 	this.ticket_desc,
         utc_offset      :   ScheduleUtil.getGMTOffset(this.selected_timezone),
         time_zone       :   this.selected_timezone,
-        reminder       	:   this.remainder
-
+        reminder       	:   this.remainder,
+        schedule_id 	: 	this.schedule_id,
+        identity 		: 	this.context_identity
     };
     
     var schedule_session_details    =   {
@@ -850,9 +854,11 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
 }
 
 ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
+    
     if(response.success){
 
     	this.getScheduleSession();
+    
     }else{
     	
     	this.showFDDangerNotification('Some error occured.Please contact support@zohoassist.com.');
