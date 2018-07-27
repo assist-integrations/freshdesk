@@ -44,7 +44,7 @@ var  ScheduleUtil  =   {
 
 	    var hour    =   temp_min/60;
 	    hour        =   Math.floor(hour);
-	    var seconds =   temp_min - (hour*60);
+	    var seconds =   temp_min - hour * 60 ;
 	    if((""+hour).length === 1){
 	        hour    =  "0"+hour;
 	    }
@@ -348,7 +348,7 @@ function ScheduleObj(client){
 }
 
 
-ScheduleObj.prototype.init = function(){
+ScheduleObj.prototype.init = function() {
 
     //handling post messages
     window.addEventListener('message', this.handlePostMessageCommunication.bind(this), true);
@@ -362,7 +362,7 @@ ScheduleObj.prototype.init = function(){
 
     this.fd_client.instance.resize({ height: "500px" });
 
-}
+};
 
 //Start of the Assist Server Setting
 
@@ -372,7 +372,7 @@ ScheduleObj.prototype.setAssistServerURL = function(){
         function(exc){
             //console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setAssistServerURLCallback = function(data){
 
@@ -385,7 +385,7 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
     var     iframe_ele      =   document.getElementById("post_message_iframe");
     iframe_ele.src          =   this.server_url+this.iframe_url;
 
-}
+};
 
 //End of the Assist Server Setting
 
@@ -397,7 +397,7 @@ ScheduleObj.prototype.setFDTicketDetails = function(){
         function(exc){
             // console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
 
@@ -406,7 +406,7 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_subject     =       data.ticket.subject;
     this.ticket_desc 		= 		data.ticket.description_text;
 
-}
+};
 
 //End of the getting freshdesk ticket details
 
@@ -418,13 +418,13 @@ ScheduleObj.prototype.setFDCustomerDetails = function(){
         function(exc){
             // console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setFDCustomerDetailsCallback = function(data){
     this.customer_detail    =   data.requester;
     this.customer_email     =   data.requester.email;
     this.customer_name      =   data.requester.name;
-}
+};
 
 //end of the getting freshdesk customer details
 
@@ -443,7 +443,7 @@ ScheduleObj.prototype.switchAvailableTimezone = function(){
 	
 	}
 
-}
+};
 
 ScheduleObj.prototype.filterAvailableTimezones 	= 	function(){
 	
@@ -453,7 +453,7 @@ ScheduleObj.prototype.filterAvailableTimezones 	= 	function(){
 
 	this.showAvailableTimeZones();
 	
-}
+};
 
 ScheduleObj.prototype.showAvailableTimeZones 	= 	function(){
 
@@ -468,7 +468,7 @@ ScheduleObj.prototype.showAvailableTimeZones 	= 	function(){
     $("#available_timezone_with_filter").show();
     
     $("#available_timezone").html(html);
-}
+};
 
 ScheduleObj.prototype.hideAvailableTimeZones 	= 	function(){
     
@@ -480,7 +480,7 @@ ScheduleObj.prototype.hideAvailableTimeZones 	= 	function(){
 
     $("#available_timezone_with_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
@@ -494,7 +494,7 @@ ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
     ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
-}
+};
 
 ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
 
@@ -502,7 +502,7 @@ ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
 
 	this.customer_email 			= 	value;
 
-}
+};
 
 ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
 
@@ -510,7 +510,7 @@ ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
 
 	this.ticket_subject 			= 	value;
 
-}
+};
 
 ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
 
@@ -518,7 +518,7 @@ ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
 
 	this.ticket_desc 				= 	value.substr(0,450);
 
-}
+};
 
 ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
@@ -526,7 +526,7 @@ ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
 	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
-}
+};
 
 ScheduleObj.prototype.showTime 	= 	function() {
 
@@ -593,7 +593,7 @@ ScheduleObj.prototype.showTime 	= 	function() {
 
 	this.showRemainingTimeContainer(show_time_list);
 
-}
+};
 
 ScheduleObj.prototype.showRemainingTimeContainer 	=   function(show_time_list){
 
@@ -606,7 +606,7 @@ ScheduleObj.prototype.showRemainingTimeContainer 	=   function(show_time_list){
 
     $("#available_time").html(template(show_time_list));
 
-}
+};
 
 ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 
@@ -616,7 +616,7 @@ ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 
     $("#available_time_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
@@ -626,7 +626,7 @@ ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
 	this.show_remaining_time	= 	false;
 
-}
+};
 
 ScheduleObj.prototype.showRemainders 	= 	function() {
 
@@ -685,14 +685,14 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 
 	this.showRemainderTimeContainer(show_remainder_list);
 
-}
+};
 
 ScheduleObj.prototype.remianderList 	= 	function(display_time, multiply_time,time_format){
 	return {
 		minutes 				: 	display_time*multiply_time,
 		full_text_remainder 	:	display_time + ' ' + time_format + ' before'
 	};
-}
+};
 
 ScheduleObj.prototype.showRemainderTimeContainer 	=   function(show_time_list){
 
@@ -705,7 +705,7 @@ ScheduleObj.prototype.showRemainderTimeContainer 	=   function(show_time_list){
 
     $("#available_remainders").html(template(show_time_list));
 
-}
+};
 
 ScheduleObj.prototype.hideRemainderTimeContainer 	=   function(){
 
@@ -715,7 +715,7 @@ ScheduleObj.prototype.hideRemainderTimeContainer 	=   function(){
 
     $("#available_remainder_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectRemainder 	= 	function(minutes,remainder_text){
 
@@ -727,7 +727,7 @@ ScheduleObj.prototype.selectRemainder 	= 	function(minutes,remainder_text){
 
 	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
-}
+};
 
 ScheduleObj.prototype.getScheduleSessionObjById 	= 	function(schedule_id){
 
@@ -739,7 +739,7 @@ ScheduleObj.prototype.getScheduleSessionObjById 	= 	function(schedule_id){
 
 	return null;
 
-}
+};
 
 ScheduleObj.prototype.showUpdateScheduleSession 	= 	function(schedule_id){
 
@@ -748,14 +748,14 @@ ScheduleObj.prototype.showUpdateScheduleSession 	= 	function(schedule_id){
 	ScheduleUtil.showPreloaderComponent();
 	
 	this.getScheduleSessionDetails();
-}
+};
 
 ScheduleObj.prototype.hideUpdateScheduleSession 	= 	function(){
 
     this.schedule_id        =       -1;
 
 	this.handleBasicPostMessageCallback();
-}
+};
 
 //end of handling show and hide methods
 
@@ -801,7 +801,7 @@ ScheduleObj.prototype.handlePostMessageCommunication = function(event){
 
     }
 
-}
+};
 
 ScheduleObj.prototype.getScheduleSession      =   function(){
     
@@ -819,7 +819,7 @@ ScheduleObj.prototype.getScheduleSession      =   function(){
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(schedule_session_details,'*');
 
-}
+};
 
 ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     if(response.success){
@@ -838,7 +838,7 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     	
     	var 	formatted_schedule_list = 		this.getScheduleSessionFormat();
 
-        this.show_load_more             =       current_schedule_list.length === 15
+        this.show_load_more             =       current_schedule_list.length === 15;
 
     	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 
@@ -847,7 +847,7 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     	this.fd_client.instance.close();
 
     }
-}
+};
 
 ScheduleObj.prototype.getScheduleSessionFormat      =   function(){
 
@@ -868,7 +868,7 @@ ScheduleObj.prototype.getScheduleSessionFormat      =   function(){
 
     return  formatted_schedule_list;
 
-}
+};
 
 ScheduleObj.prototype.getNextScheduleSession      =   function(){
 
@@ -878,7 +878,7 @@ ScheduleObj.prototype.getNextScheduleSession      =   function(){
 
     this.handleBasicPostMessageCallback();
 
-}
+};
 
 ScheduleObj.prototype.getScheduleSessionDetails      =   function(){
     
@@ -893,7 +893,7 @@ ScheduleObj.prototype.getScheduleSessionDetails      =   function(){
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(schedule_session_details,'*');
 
-}
+};
 
 ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(response){
     if(response.success){
@@ -930,7 +930,7 @@ ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(respon
     	this.fd_client.instance.close();
 
     }
-}
+};
 
 ScheduleObj.prototype.getRemainderText      =   function(minutes){
     
@@ -956,7 +956,7 @@ ScheduleObj.prototype.getRemainderText      =   function(minutes){
 
 
 
-}
+};
 
 ScheduleObj.prototype.updateScheduleSession      =   function(){
 
@@ -992,7 +992,7 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(schedule_session_details,'*');
 
-}
+};
 
 ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     
@@ -1009,7 +1009,7 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     	ScheduleUtil.showErrorMessageContainer('Oops! Some error occured.Please contact support@zohoassist.com.');
     
     }
-}
+};
 
 ScheduleObj.prototype.afterUpdateCallback      =   function(schedule_obj){
 
@@ -1031,7 +1031,7 @@ ScheduleObj.prototype.afterUpdateCallback      =   function(schedule_obj){
 
     $("#get_schedule_session_"+this.schedule_id).addClass('updated-schedule-session');
 
-}
+};
 
 ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
 
@@ -1050,7 +1050,7 @@ ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(delete_schedule_session_details,'*');
 
-}
+};
 
 ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
@@ -1070,7 +1070,7 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
     this.delete_schedule_id     =   -1;
 
-}
+};
 
 ScheduleObj.prototype.removeScheduleObj      =   function(schedule_id){
 
@@ -1081,7 +1081,7 @@ ScheduleObj.prototype.removeScheduleObj      =   function(schedule_id){
         }
     }
 
-}
+};
 
 ScheduleObj.prototype.handleBasicPostMessageCallback  =   function(){
 
@@ -1089,4 +1089,4 @@ ScheduleObj.prototype.handleBasicPostMessageCallback  =   function(){
 
     $(document).scrollTop(this.get_schedule_session_scroll_top);
 
-}
+};

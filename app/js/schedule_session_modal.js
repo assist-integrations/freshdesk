@@ -172,7 +172,7 @@ var  ScheduleUtil  =   {
 
 	}
 
-}
+};
 
 
 
@@ -269,7 +269,7 @@ ScheduleObj.prototype.init = function(){
 
     this.fd_client.instance.resize({ height: "500px" });
 
-}
+};
 
 //Start of the Assist Server Setting
 
@@ -279,7 +279,7 @@ ScheduleObj.prototype.setAssistServerURL = function(){
         function(exc){
             //console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setAssistServerURLCallback = function(data){
 
@@ -292,7 +292,7 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
     var     iframe_ele      =   document.getElementById("post_message_iframe");
     iframe_ele.src          =   this.server_url+this.iframe_url;
 
-}
+};
 
 //End of the Assist Server Setting
 
@@ -304,7 +304,7 @@ ScheduleObj.prototype.setFDTicketDetails = function(){
         function(exc){
             // console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
 
@@ -313,7 +313,7 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_subject     =       data.ticket.subject;
     this.ticket_desc 		= 		data.ticket.description_text;
 
-}
+};
 
 //End of the getting freshdesk ticket details
 
@@ -325,13 +325,13 @@ ScheduleObj.prototype.setFDCustomerDetails = function(){
         function(exc){
             // console.log(exc);
         });
-}
+};
 
 ScheduleObj.prototype.setFDCustomerDetailsCallback = function(data){
     this.customer_detail    =   data.requester;
     this.customer_email     =   data.requester.email;
     this.customer_name      =   data.requester.name;
-}
+};
 
 //end of the getting freshdesk customer details
 
@@ -350,7 +350,7 @@ ScheduleObj.prototype.switchAvailableTimezone = function(){
 	
 	}
 
-}
+};
 
 ScheduleObj.prototype.filterAvailableTimezones 	= 	function(){
 	
@@ -360,7 +360,7 @@ ScheduleObj.prototype.filterAvailableTimezones 	= 	function(){
 
 	this.showAvailableTimeZones();
 	
-}
+};
 
 ScheduleObj.prototype.showAvailableTimeZones 	= 	function(){
 
@@ -375,7 +375,7 @@ ScheduleObj.prototype.showAvailableTimeZones 	= 	function(){
     $("#available_timezone_with_filter").show();
     
     $("#available_timezone").html(html);
-}
+};
 
 ScheduleObj.prototype.hideAvailableTimeZones 	= 	function(){
     
@@ -387,7 +387,7 @@ ScheduleObj.prototype.hideAvailableTimeZones 	= 	function(){
 
     $("#available_timezone_with_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
@@ -401,7 +401,7 @@ ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
     this.handleBasicPostMessageCallback();
 
-}
+};
 
 ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
 
@@ -409,7 +409,7 @@ ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
 
 	this.customer_email 			= 	value;
 
-}
+};
 
 ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
 
@@ -417,7 +417,7 @@ ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
 
 	this.ticket_subject 			= 	value;
 
-}
+};
 
 ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
 
@@ -425,7 +425,7 @@ ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
 
 	this.ticket_desc 				= 	value;
 
-}
+};
 
 ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
@@ -433,7 +433,7 @@ ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
 	this.handleBasicPostMessageCallback();
 
-}
+};
 
 ScheduleObj.prototype.showTime 	= 	function() {
 
@@ -488,7 +488,7 @@ ScheduleObj.prototype.showTime 	= 	function() {
 
 	this.showRemainingTimeContainer(show_time_list);
 
-}
+};
 
 ScheduleObj.prototype.showRemainingTimeContainer 	=   function(show_time_list){
 
@@ -501,7 +501,7 @@ ScheduleObj.prototype.showRemainingTimeContainer 	=   function(show_time_list){
 
     $("#available_time").html(template(show_time_list));
 
-}
+};
 
 ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 
@@ -511,7 +511,7 @@ ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 
     $("#available_time_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
@@ -521,7 +521,7 @@ ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
 	this.show_remaining_time	= 	false;
 
-}
+};
 
 ScheduleObj.prototype.showRemainders 	= 	function() {
 
@@ -573,14 +573,14 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 
 	this.showRemainderTimeContainer(show_remainder_list);
 
-}
+};
 
 ScheduleObj.prototype.remianderList 	= 	function(display_time, multiply_time,time_format){
 	return {
 		minutes 				: 	display_time*multiply_time,
 		full_text_remainder 	:	display_time + ' ' + time_format + ' before'
 	};
-}
+};
 
 ScheduleObj.prototype.showRemainderTimeContainer 	=   function(show_time_list){
 
@@ -593,7 +593,7 @@ ScheduleObj.prototype.showRemainderTimeContainer 	=   function(show_time_list){
 
     $("#available_remainders").html(template(show_time_list));
 
-}
+};
 
 ScheduleObj.prototype.hideRemainderTimeContainer 	=   function(){
 
@@ -603,7 +603,7 @@ ScheduleObj.prototype.hideRemainderTimeContainer 	=   function(){
 
     $("#available_remainder_filter").hide();
 
-}
+};
 
 ScheduleObj.prototype.selectRemainder 	= 	function(minutes,remainder_text){
 
@@ -615,7 +615,7 @@ ScheduleObj.prototype.selectRemainder 	= 	function(minutes,remainder_text){
 
 	this.show_remainder_time	= 	false;
 
-}
+};
 
 //end of handling show and hide methods
 
@@ -649,7 +649,7 @@ ScheduleObj.prototype.handlePostMessageCommunication = function(event){
 
     }
 
-}
+};
 
 ScheduleObj.prototype.createScheduleSession      =   function(){
     
@@ -673,14 +673,14 @@ ScheduleObj.prototype.createScheduleSession      =   function(){
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(schedule_session_details,'*');
 
-}
+};
 
 ScheduleObj.prototype.scheduleSessionTextToAddNotes      =   function(technician_url){
 
 	var formatted_schedule_time 	= 	this.display_date.format('MMM DD,YYYY h:mm A z');
 
 	return 'You have scheduled a remote support session to be held at '+ formatted_schedule_time +'. Click the below link to join the session at the scheduled time.<br><br>'+ technician_url ;
-}
+};
 
 ScheduleObj.prototype.createScheduleSessionCallback      =   function(response){
     if(response.success){
@@ -699,10 +699,10 @@ ScheduleObj.prototype.createScheduleSessionCallback      =   function(response){
     	this.showFDDangerNotification('Some error occured.Please contact support@zohoassist.com.');
     
     }
-}
+};
 
 ScheduleObj.prototype.handleBasicPostMessageCallback  =   function(){
 
     ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
-}
+};

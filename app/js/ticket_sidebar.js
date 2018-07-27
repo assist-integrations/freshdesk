@@ -162,7 +162,7 @@ AssistObj.prototype.init = function(){
 
     this.fd_client.instance.receive(this.receiveFDInterMessage);
 
-}
+};
 
 //Start of the Assist Server Setting
 
@@ -172,7 +172,7 @@ AssistObj.prototype.setAssistServerURL = function(){
         function(exc){
             //console.log(exc);
         });
-}
+};
 
 AssistObj.prototype.setAssistServerURLCallback = function(data){
 
@@ -185,7 +185,7 @@ AssistObj.prototype.setAssistServerURLCallback = function(data){
     var     iframe_ele      =   document.getElementById("post_message_iframe");
     iframe_ele.src          =   this.server_url+this.iframe_url;
 
-}
+};
 
 //End of the Assist Server Setting
 
@@ -197,7 +197,7 @@ AssistObj.prototype.setFDTicketDetails = function(){
         function(exc){
             console.log(exc);
         });
-}
+};
 
 AssistObj.prototype.setFDTicketDetailsCallback = function(data){
 
@@ -205,7 +205,7 @@ AssistObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_id          =       data.ticket.id;
     this.ticket_subject     =       data.ticket.subject;
 
-}
+};
 
 //End of the getting freshdesk ticket details
 
@@ -217,12 +217,12 @@ AssistObj.prototype.setFDCustomerDetails = function(){
         function(exc){
             console.log(exc);
         });
-}
+};
 
 AssistObj.prototype.setFDCustomerDetailsCallback = function(data){
     this.customer_detail    =   data.requester;
     this.customer_email     =   data.requester.email;
-}
+};
 
 //end of the getting freshdesk customer details
 
@@ -276,25 +276,13 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
     
         this.createSupportSessionCallback(response.session);
     
-    }else if(response.create_schedule_session         !==     undefined){
-    
-        this.createScheduleSessionCallback(response.create_schedule_session);
-    
-    }else if(response.get_schedule_session            !==     undefined){
-    
-        this.getScheduleSessionCallback(response.get_schedule_session);
-    
-    }else if(response.get_session_reports             !==     undefined){
-    
-        this.getSupportSessionReportsCallback(response.get_session_reports);
-    
     }else{
 
         this.handleBasicPostMessageCallback();
 
     }
 
-}
+};
 
 //end of handling post message from assist
 
@@ -305,7 +293,7 @@ AssistObj.prototype.openLoginPage   =   function(){
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);
-}
+};
 
 AssistObj.prototype.openInstallationPage    =       function(){
 
@@ -314,7 +302,7 @@ AssistObj.prototype.openInstallationPage    =       function(){
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);
-}
+};
 
 AssistObj.prototype.checkLoginWindowClosed   =   function(){
 
@@ -326,7 +314,7 @@ AssistObj.prototype.checkLoginWindowClosed   =   function(){
         document.location.reload(true);
     }
 
-}
+};
 
 AssistObj.prototype.selectSessionType  =   function(option){
     
@@ -339,7 +327,7 @@ AssistObj.prototype.selectSessionType  =   function(option){
 
     this.handleBasicPostMessageCallback();
 
-}
+};
 
 //Start of the validation function
 
@@ -347,20 +335,20 @@ AssistObj.prototype.checkForIntegrationgFeature  =   function(){
 
     return this.license_details.features.includes(AssistUtil.integration_feature);
 
-}
+};
 
 AssistObj.prototype.checkForScreenSharingFeature  =   function(){
 
     return this.license_details.features.includes(AssistUtil.screen_sharing_feature);
 
-}
+};
 
 
 AssistObj.prototype.checkForScheduleSessionFeature  =   function(){
 
     return this.license_details.features.includes(AssistUtil.schedule_session_feature);
 
-}
+};
 
 AssistObj.prototype.showFDInfoNotification  =   function(message){
 
@@ -371,7 +359,7 @@ AssistObj.prototype.showFDInfoNotification  =   function(message){
 
     this.fd_client.interface.trigger("showNotify", messageObj);
 
-}
+};
 
 AssistObj.prototype.showFDSuccessNotification  =   function(message){
 
@@ -382,7 +370,7 @@ AssistObj.prototype.showFDSuccessNotification  =   function(message){
 
     this.fd_client.interface.trigger("showNotify", messageObj);
 
-}
+};
 
 AssistObj.prototype.showFDWarningNotification  =   function(message){
 
@@ -393,7 +381,7 @@ AssistObj.prototype.showFDWarningNotification  =   function(message){
 
     this.fd_client.interface.trigger("showNotify", messageObj);
 
-}
+};
 
 AssistObj.prototype.showFDDangerNotification  =   function(message){
 
@@ -404,7 +392,7 @@ AssistObj.prototype.showFDDangerNotification  =   function(message){
 
     this.fd_client.interface.trigger("showNotify", messageObj);
 
-}
+};
 
 AssistObj.prototype.receiveFDInterMessage  =   function(event){
 
@@ -417,7 +405,7 @@ AssistObj.prototype.receiveFDInterMessage  =   function(event){
         this.fd_client.interface.trigger('click',{id: "note", text: data.message.note_text, isPublic: false});
     }
 
-}
+};
 
 //end of the validation function
 
@@ -446,7 +434,7 @@ AssistObj.prototype.createSupportSession            =   function(){
     iframeVar.contentWindow.postMessage(session_details,'*');
     
     this.login_window   = window.open("","_blank");
-}
+};
 
 AssistObj.prototype.createSupportSessionCallback    =   function(response){
     console.log(response.success);
@@ -457,7 +445,7 @@ AssistObj.prototype.createSupportSessionCallback    =   function(response){
     }else{
         this.showFDDangerNotification("Error occured during session creation. Please contact support@zohoassist.com.");
     }
-}
+};
 
 AssistObj.prototype.createScheduleSession      =   function(){
 
@@ -470,30 +458,14 @@ AssistObj.prototype.createScheduleSession      =   function(){
       title: "Schedule Session", 
       template: "schedule_session_modal.html" 
     });
-}
-
-AssistObj.prototype.createScheduleSessionCallback      =   function(response){
-    console.log(response);
-}
-
-AssistObj.prototype.getSupportSessionReports   =   function(){
-    console.log(this);
-}
-
-AssistObj.prototype.getSupportSessionReportsCallback   =   function(response){
-    console.log(response);
-}
+};
 
 AssistObj.prototype.getScheduleSession         =   function(){
     this.fd_client.interface.trigger("showDialog", { 
         title       :   "View Schedule Session", 
         template    :   "get_schedule_session_modal.html" 
     });
-}
-
-AssistObj.prototype.getScheduleSessionCallback         =   function(response){
-    console.log(response);
-}
+};
 
 AssistObj.prototype.handleBasicPostMessageCallback  =   function(){
 
@@ -507,6 +479,6 @@ AssistObj.prototype.handleBasicPostMessageCallback  =   function(){
 
     AssistUtil.showAssistMainTemplate(session_type_option_template,session_type_text_template,session_schedule_btn_template);
 
-}
+};
 
 //End of the Assist API calling and Response from post messages
