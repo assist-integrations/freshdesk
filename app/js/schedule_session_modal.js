@@ -180,7 +180,7 @@ function ScheduleObj(client){
 
 	//assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
-    this.server          =   "http://naveen-4630.csez.zohocorpin.";
+    this.server          =   "https://assist.zoho.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
     this.user_details    =   null;
@@ -288,7 +288,7 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
     }
 
     //calling assist integration iframe
-    this.server_url         =   this.server+this.domain+":8080";
+    this.server_url         =   this.server+this.domain;
     var     iframe_ele      =   document.getElementById("post_message_iframe");
     iframe_ele.src          =   this.server_url+this.iframe_url;
 
