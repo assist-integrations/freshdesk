@@ -274,6 +274,9 @@ function ScheduleObj(client){
 
     this.getScheduleSessionObjById 		= 	 this.getScheduleSessionObjById.bind(this);
 
+    this.deleteScheduleSession 			= 	 this.deleteScheduleSession.bind(this);
+    this.deleteScheduleSessionCallback 	= 	 this.deleteScheduleSessionCallback.bind(this);
+
     //init all variables by init
     this.init();
 
@@ -701,6 +704,10 @@ ScheduleObj.prototype.handlePostMessageCommunication = function(event){
     
         this.updateScheduleSessionCallback(response.update_schedule_session);
     
+    }else if(response.delete_schedule_session         !==     undefined){
+    
+        this.deleteScheduleSessionCallback(response.delete_schedule_session);
+    
     }else{
 
         this.handleBasicPostMessageCallback();
@@ -744,8 +751,9 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     			ticket_title 		: 	this.schedule_list[index].context_title,
                 schedule_time 		: 	moment.tz(Number(this.schedule_list[index].context_schedule_time),this.schedule_list[index].context_schedule_timezone).format('MMM DD,YYYY h:mm A z'),
                 customer_email 		: 	this.schedule_list[index].context_customer_email,
-                technician_email 	: 	this.schedule_list[index].context_owner_name
-            });
+                technician_email 	: 	this.schedule_list[index].context_owner_name,
+                technician_url 		: 	this.server_url+"/assist-schedule?schedule_id="+this.schedule_list[index].schedule_id+"&digest="+this.schedule_list[index].context_identity+"&role=V"
+             });
     	}
 
     	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list);
@@ -864,6 +872,29 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     	this.showFDDangerNotification('Some error occured.Please contact support@zohoassist.com.');
     
     }
+}
+
+ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
+
+	var data 		= 	{
+        schedule_id 	: 	schedule_id
+    };
+    
+    var delete_schedule_session_details    =   {
+        delete_schedule_session    :    data
+    };
+
+    var iframeVar       =   document.getElementById("post_message_iframe");
+    iframeVar.contentWindow.postMessage(delete_schedule_session_details,'*');
+
+}
+
+ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
+
+	if(response.success){
+		this.handleBasicPostMessageCallback();
+	}
+
 }
 
 ScheduleObj.prototype.handleBasicPostMessageCallback  =   function(){

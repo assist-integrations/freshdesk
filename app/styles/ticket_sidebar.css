@@ -352,13 +352,14 @@ input#timezone_filter{
     font-weight :   600;
     clear       :   both;
     width       :   100%;
-    font-size   :   14px;  
+    font-size   :   14px; 
+    margin-bottom:  10px; 
 }
 
 .get-schedule-session-ticket-details .ticket-no-details{
     position    :   relative;
     float       :   left;
-    width       :   15%; 
+    padding-right: 20px;
 }
 
 .get-schedule-session-ticket-details .ticket-title-details{
@@ -372,6 +373,7 @@ input#timezone_filter{
     float       :   left;
     clear       :   both; 
     width       :   100%;
+    margin-bottom:  10px;
 }
 
 .get-schedule-session-details-container .key-value-container {
@@ -379,6 +381,7 @@ input#timezone_filter{
     float       :   left;
     clear       :   both; 
     width       :   100%;
+    padding     :   2px 0; 
 }
 
 .get-schedule-session-details-container .key-container {
@@ -399,4 +402,24 @@ input#timezone_filter{
     float       :   left;
     clear       :   both;
     width       :   100%;
+    margin-bottom:  10px;
+}
+
+.get-schedule-session-manipulation-container div {
+    position    :   relative;
+    float       :   left;
+    padding     :   10px;
+    color       :   #02b875;
+    font-size   :   11px;
+    font-weight :   600;  
+    margin-left :   15px;
+    cursor      :   pointer; 
+}
+
+#top_success_message {
+    display     :    none;
+}
+
+#top_error_message {
+    display     :    none;
 }

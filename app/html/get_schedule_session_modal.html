@@ -137,9 +137,9 @@
                     </div>
                 </div>
                 <div class="get-schedule-session-manipulation-container">
-                    <input type="button" class="primary-btn" value="START NOW" />
+                    <input type="button" class="primary-btn" value="START NOW" onclick="window.open('{{technician_url}}','_blank')" />
                     <div onclick="ScheduleUtil.scheduleObj.showUpdateScheduleSession(&quot;{{schedule_id}}&quot;)">EDIT</div>
-                    <div>DELETE</div>
+                    <div onclick="ScheduleUtil.scheduleObj.deleteScheduleSession(&quot;{{schedule_id}}&quot;)">DELETE</div>
                 </div>
             </div>
         {{/each}}
@@ -157,6 +157,8 @@
     <script type="text/javascript" src="../js/get_schedule_session_modal.js"></script>
 
     <div class="schedule-session-container">
+        <div id="top_success_message"></div>
+        <div id="top_error_message"></div>
         <div id="content">
             <div class="preloader"></div>
         </div>
