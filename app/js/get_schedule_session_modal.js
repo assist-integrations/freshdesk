@@ -838,7 +838,7 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     	
     	var 	formatted_schedule_list = 		this.getScheduleSessionFormat();
 
-        this.show_load_more             =       current_schedule_list.length <= 15
+        this.show_load_more             =       current_schedule_list.length === 15
 
     	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 
