@@ -39,7 +39,7 @@ var  ScheduleUtil  =   {
 
 	    var hour    =   temp_min/60;
 	    hour        =   Math.floor(hour);
-	    var seconds =   temp_min - (hour*60);
+	    var seconds =   temp_min - hour * 60;
 	    if((""+hour).length === 1){
 	        hour    =  "0"+hour;
 	    }
@@ -689,10 +689,9 @@ ScheduleObj.prototype.createScheduleSessionCallback      =   function(response){
 		  message: {location 	:  	"create_schedule_session_dialog", note_text 	: 	this.scheduleSessionTextToAddNotes(response.success.representation.technician_url) }
 		}); 
 
-    	setTimeout(
-    		(function(){
+    	setTimeout(function(){
     			this.fd_client.instance.close();
-    		}).bind(this),
+    		}.bind(this),
     		1000);
     }else{
     	

@@ -943,7 +943,8 @@ ScheduleObj.prototype.getRemainderText      =   function(minutes){
 	}
 
 	if(minutes 	< 	24*60){
-		return 	(minutes/60)+' hours before';
+        var minutes_sixty   =   minutes/60;
+		return 	minutes_sixty+' hours before';
 	}
 
 	if(minutes 	=== 7*24*60){
@@ -951,7 +952,8 @@ ScheduleObj.prototype.getRemainderText      =   function(minutes){
 	}
 
 	if(minutes 	>= 	24*60){
-		return 	(minutes/24*60)+' days before';
+        var minutes_full   =   minutes/(24*60);
+		return 	minutes_full+' days before';
 	}
 
 

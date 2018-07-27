@@ -322,7 +322,7 @@ AssistObj.prototype.selectSessionType  =   function(option){
         this.showFDInfoNotification("Share my screen is available only in Remote Support (Professional).");
     }
     else{
-        this.session_type        =       (option    ===     0)?"rs":"dm";
+        this.session_type        =       option === 0 ? "rs":"dm";
     }
 
     this.handleBasicPostMessageCallback();
