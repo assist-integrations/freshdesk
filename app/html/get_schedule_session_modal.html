@@ -117,7 +117,7 @@
     <!-- Schedule session list Temnplate -->
     <script id="schedule_session_list_component" type="text/x-handlebars-template">
         {{#each this}}
-            <div class="get-schedule-session-container">
+            <div class="get-schedule-session-container" id="get_schedule_session_{{schedule_id}}">
                 <div class="get-schedule-session-ticket-details">
                     <div class="ticket-no-details">#{{ticket_no}}</div>
                     <div class="ticket-title-details">{{ticket_title}}</div>
@@ -143,6 +143,20 @@
                 </div>
             </div>
         {{/each}}
+    </script>
+
+    <script id="no_schedule_session_component" type="text/x-handlebars-template">
+        <div class="no-schedule-session-container">
+            <img src="../images/no-schedule-sessions.png" width="180" height="180" />
+            <div style="font-weight: 600;font-size: 18px;">Its' empty!</div>
+            <div>Start scheduling remote support sessions from freshdesk.</div>
+        </div>
+    </script>
+
+    <script id="schedule_load_more_component" type="text/x-handlebars-template">
+        {{#if show_load_more}}
+            <div class="show-more-container" onclick="ScheduleUtil.scheduleObj.getNextScheduleSession()">Load More</div>
+        {{/if}}
     </script>
 
   	<!-- Loading JS Files -->

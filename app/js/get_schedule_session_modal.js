@@ -179,11 +179,67 @@ var  ScheduleUtil  =   {
 
 	//End of the edit schedule session
 
-	showScheduleSessionDetailsContainer    :   function(schedule_list){
-        var source      =   $("#schedule_session_list_component").html();
-        var template    =   Handlebars.compile(source);
+	showScheduleSessionDetailsContainer    :   function(schedule_list , show_load_more){
+        var source                      =   $("#schedule_session_list_component").html();
+        var template                    =   Handlebars.compile(source);
+        var get_schedule_session_html   =   template(schedule_list);
 
-        $("#content").html(template(schedule_list));
+        //show more 
+        var show_more_param     =   {
+            show_load_more      :   show_load_more
+        };
+        var load_more_source            =   $("#schedule_load_more_component").html();
+        var load_more_template          =   Handlebars.compile(load_more_source);
+        var load_more_html              =   load_more_template(show_more_param);
+
+
+        $("#content").html(get_schedule_session_html+load_more_html);
+    },
+
+    showNoScheduleSessionContainer(){
+
+        $("#content").html($("#no_schedule_session_component").html());
+
+    },
+
+    showSuccessMessageContainer(message){
+
+        $('#top_success_message').show();
+
+        $('#top_success_message').html(message);
+
+        setTimeout(function(){
+            ScheduleUtil.hideSuccessMessageContainer();
+        },3000);
+    
+    },
+
+    hideSuccessMessageContainer(){
+
+        $('#top_success_message').html('');
+
+        $('#top_success_message').hide();
+    
+    },
+
+    showErrorMessageContainer(message){
+
+        $('#top_error_message').show();
+
+        $('#top_error_message').html(message);
+
+        setTimeout(function(){
+            ScheduleUtil.hideErrorMessageContainer();
+        },3000);
+    
+    },
+
+    hideErrorMessageContainer(){
+
+        $('#top_error_message').html('');
+
+        $('#top_error_message').hide();
+    
     }
 
 };
@@ -276,6 +332,9 @@ function ScheduleObj(client){
 
     this.deleteScheduleSession 			= 	 this.deleteScheduleSession.bind(this);
     this.deleteScheduleSessionCallback 	= 	 this.deleteScheduleSessionCallback.bind(this);
+    this.delete_schedule_id             =    -1;
+
+    this.get_schedule_session_scroll_top=    0;
 
     //init all variables by init
     this.init();
@@ -737,9 +796,18 @@ ScheduleObj.prototype.getScheduleSession      =   function(){
 ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
     if(response.success){
 
-    	this.schedule_list 				= 		response.success.representation;
+    	var current_schedule_list 		= 		response.success.representation;
 
-    	console.log(this.schedule_list);
+        this.schedule_list              =       this.schedule_list.concat(current_schedule_list);
+
+
+        //no-schedule-session
+        if(this.schedule_list.length    <=      0){
+            
+            ScheduleUtil.showNoScheduleSessionContainer();
+
+            return;
+        }
     	
     	var 	formatted_schedule_list = 		[];
 
@@ -756,13 +824,23 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
              });
     	}
 
-    	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list);
+    	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , current_schedule_list.length === 15);
 
     }else{
 
     	this.fd_client.instance.close();
 
     }
+}
+
+ScheduleObj.prototype.getNextScheduleSession      =   function(){
+
+    this.get_schedule_session_scroll_top          =       $(document).scrollTop().valueOf();
+
+    this.index      =       this.schedule_list.length;
+
+    this.handleBasicPostMessageCallback();
+
 }
 
 ScheduleObj.prototype.getScheduleSessionDetails      =   function(){
@@ -837,6 +915,8 @@ ScheduleObj.prototype.getRemainderText      =   function(minutes){
 }
 
 ScheduleObj.prototype.updateScheduleSession      =   function(){
+
+    this.get_schedule_session_scroll_top        =       $(document).scrollTop().valueOf();
     
     var data 		= 	{
         app_identity    :   this.app_identity,
@@ -865,19 +945,37 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     
     if(response.success){
 
-    	this.getScheduleSession();
+        ScheduleUtil.showSuccessMessageContainer('Schedule session successfully updated.');
+
+        // setTimeout(function(){
+            
+        //     $([document.documentElement, document.body]).animate({
+        //         scrollTop: $("#get_schedule_session_"+this.schedule_id).offset().top
+        //     }, 2000);
+
+        //     $("#get_schedule_session_"+this.schedule_id).addClass('updated-schedule-session');
+        
+        // },2000);
+
+    	this.handleBasicPostMessageCallback();
     
     }else{
     	
-    	this.showFDDangerNotification('Some error occured.Please contact support@zohoassist.com.');
+    	ScheduleUtil.showErrorMessageContainer('Oops! Some error occured.Please contact support@zohoassist.com.');
     
     }
+
+    this.schedule_id        =       -1;
 }
 
 ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
 
+    this.get_schedule_session_scroll_top        =       $(document).scrollTop().valueOf();
+
+    this.delete_schedule_id                     =       schedule_id;
+
 	var data 		= 	{
-        schedule_id 	: 	schedule_id
+        schedule_id 	: 	this.delete_schedule_id
     };
     
     var delete_schedule_session_details    =   {
@@ -892,13 +990,38 @@ ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
 ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
 	if(response.success){
-		this.handleBasicPostMessageCallback();
-	}
+
+		this.removeScheduleObj(this.delete_schedule_id);
+
+        ScheduleUtil.showSuccessMessageContainer('Schedule session successfully delete.');
+
+        this.handleBasicPostMessageCallback();
+
+	}else{
+
+        ScheduleUtil.showErrorMessageContainer('Oops! Some error occured.Please contact support@zohoassist.com.');
+    
+    }
+
+    this.delete_schedule_id     =   -1;
+
+}
+
+ScheduleObj.prototype.removeScheduleObj      =   function(schedule_id){
+
+    var splice_position     =   this.schedule_list.length;
+    for(var i in this.schedule_list){
+        if(this.schedule_list[i].schedule_id    ===     schedule_id){
+            this.schedule_list.splice(i,1);
+        }
+    }
 
 }
 
 ScheduleObj.prototype.handleBasicPostMessageCallback  =   function(){
 
     this.getScheduleSession();
+
+    $(document).scrollTop(this.get_schedule_session_scroll_top);
 
 }

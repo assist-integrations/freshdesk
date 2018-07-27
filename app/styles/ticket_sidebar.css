@@ -145,6 +145,16 @@ body{
     to {-webkit-transform: rotate(360deg);}
 }
 
+@keyframes animate-top{
+    from { top: -50px; opacity: 0 }
+    to { top:10px; opacity: 1 }
+}
+
+@-webkit-keyframes animate-top{
+    from { top: -50px; opacity: 0 }
+    to { top:10px; opacity: 1 }
+}
+
 /** End of Assist Preloader CSS **/
 
 
@@ -333,8 +343,9 @@ input#timezone_filter{
     position    :   relative;
     float       :   right;
     margin-top  :   25px;
-    color       :   #02b875;
+    color       :   #1f8dd6;
     cursor      :   pointer;
+    font-weight :   600; 
 
 }
 
@@ -417,9 +428,60 @@ input#timezone_filter{
 }
 
 #top_success_message {
-    display     :    none;
+    display             :    none;
+    background-color    :   #02b875;
+    color               :   #fff;
+    font-size           :   11px;
+    position            :   fixed;
+    z-index             :   1;
+    border-radius       :   25px;
+    left                :   50%;
+    top                 :   10px;
+    transform           :   translateX(-50%);
+    line-height         :   20px;
+    width               :   50%;
+    padding             :   5px 10px;
+    text-align          :   center;
+    animation           :   animate-top .4s; 
 }
 
 #top_error_message {
-    display     :    none;
+    display             :    none;
+    background-color    :   red;
+    color               :   #fff;
+    font-size           :   11px;
+    position            :   fixed;
+    z-index             :   2;
+    border-radius       :   25px;
+    left                :   50%;
+    top                 :   10px;
+    transform           :   translateX(-50%);
+    line-height         :   20px;
+    width               :   50%;
+    padding             :   5px 10px;
+    text-align          :   center;
+    animation           :   animate-top .4s;
+}
+
+.no-schedule-session-container {
+    position            :   absolute;
+    margin-left         :   50%;
+    transform           :   translate(-50%,-50%);
+    margin-top          :   50%;
+    text-align          :   center;
+    width               :   100%; 
+}
+
+.show-more-container {
+    width       :   100%;
+    color       :   #1f8dd6;
+    text-align  :   center;
+    position    :   relative;
+    float       :   left;
+    padding     :   10px 0; 
+    cursor      :   pointer;         
+}
+
+.updated-schedule-session {
+    background-color   :    yellow; 
 }
