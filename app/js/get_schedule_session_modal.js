@@ -329,12 +329,18 @@ function ScheduleObj(client){
     this.hideUpdateScheduleSession 		= 	 this.hideUpdateScheduleSession.bind(this);
 
     this.getScheduleSessionObjById 		= 	 this.getScheduleSessionObjById.bind(this);
+    this.getScheduleSessionFormat       =    this.getScheduleSessionFormat.bind(this);
 
     this.deleteScheduleSession 			= 	 this.deleteScheduleSession.bind(this);
     this.deleteScheduleSessionCallback 	= 	 this.deleteScheduleSessionCallback.bind(this);
     this.delete_schedule_id             =    -1;
 
+    this.getNextScheduleSession         =    this.getNextScheduleSession.bind(this);
     this.get_schedule_session_scroll_top=    0;
+    this.show_load_more                 =    false;
+    this.after_update_call              =    false;
+
+    this.afterUpdateCallback            =    this.afterUpdateCallback.bind(this);
 
     //init all variables by init
     this.init();
@@ -726,6 +732,9 @@ ScheduleObj.prototype.showUpdateScheduleSession 	= 	function(schedule_id){
 }
 
 ScheduleObj.prototype.hideUpdateScheduleSession 	= 	function(){
+
+    this.schedule_id        =       -1;
+
 	this.handleBasicPostMessageCallback();
 }
 
@@ -800,7 +809,6 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
 
         this.schedule_list              =       this.schedule_list.concat(current_schedule_list);
 
-
         //no-schedule-session
         if(this.schedule_list.length    <=      0){
             
@@ -809,28 +817,38 @@ ScheduleObj.prototype.getScheduleSessionCallback      =   function(response){
             return;
         }
     	
-    	var 	formatted_schedule_list = 		[];
+    	var 	formatted_schedule_list = 		this.getScheduleSessionFormat();
 
-    	for(var index 	in 	this.schedule_list){
+        this.show_load_more             =       current_schedule_list.length <= 15
 
-    		formatted_schedule_list.push({
-    			schedule_id 		: 	this.schedule_list[index].schedule_id,
-    			ticket_no 			: 	this.schedule_list[index].issue_id,
-    			ticket_title 		: 	this.schedule_list[index].context_title,
-                schedule_time 		: 	moment.tz(Number(this.schedule_list[index].context_schedule_time),this.schedule_list[index].context_schedule_timezone).format('MMM DD,YYYY h:mm A z'),
-                customer_email 		: 	this.schedule_list[index].context_customer_email,
-                technician_email 	: 	this.schedule_list[index].context_owner_name,
-                technician_url 		: 	this.server_url+"/assist-schedule?schedule_id="+this.schedule_list[index].schedule_id+"&digest="+this.schedule_list[index].context_identity+"&role=V"
-             });
-    	}
-
-    	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , current_schedule_list.length === 15);
+    	ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 
     }else{
 
     	this.fd_client.instance.close();
 
     }
+}
+
+ScheduleObj.prototype.getScheduleSessionFormat      =   function(){
+
+    var     formatted_schedule_list =       [];
+
+    for(var index   in  this.schedule_list){
+
+        formatted_schedule_list.push({
+            schedule_id         :   this.schedule_list[index].schedule_id,
+            ticket_no           :   this.schedule_list[index].issue_id,
+            ticket_title        :   this.schedule_list[index].context_title,
+            schedule_time       :   moment.tz(Number(this.schedule_list[index].context_schedule_time),this.schedule_list[index].context_schedule_timezone).format('MMM DD,YYYY h:mm A z'),
+            customer_email      :   this.schedule_list[index].context_customer_email,
+            technician_email    :   this.schedule_list[index].context_owner_name,
+            technician_url      :   this.server_url+"/assist-schedule?schedule_id="+this.schedule_list[index].schedule_id+"&digest="+this.schedule_list[index].context_identity+"&role=V"
+         });
+    }
+
+    return  formatted_schedule_list;
+
 }
 
 ScheduleObj.prototype.getNextScheduleSession      =   function(){
@@ -878,6 +896,13 @@ ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(respon
     	this.remainder 					= 		schedule_obj.context_schedule_reminder;
 
     	this.remainder_text 			= 		this.getRemainderText(this.remainder);
+
+        if(this.after_update_call){
+            
+            this.afterUpdateCallback(schedule_obj);
+
+            return;
+        }
 
     	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
@@ -947,25 +972,37 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
 
         ScheduleUtil.showSuccessMessageContainer('Schedule session successfully updated.');
 
-        // setTimeout(function(){
-            
-        //     $([document.documentElement, document.body]).animate({
-        //         scrollTop: $("#get_schedule_session_"+this.schedule_id).offset().top
-        //     }, 2000);
+        this.after_update_call     =    true;
 
-        //     $("#get_schedule_session_"+this.schedule_id).addClass('updated-schedule-session');
-        
-        // },2000);
-
-    	this.handleBasicPostMessageCallback();
+    	this.getScheduleSessionDetails();
     
     }else{
     	
     	ScheduleUtil.showErrorMessageContainer('Oops! Some error occured.Please contact support@zohoassist.com.');
     
     }
+}
 
-    this.schedule_id        =       -1;
+ScheduleObj.prototype.afterUpdateCallback      =   function(schedule_obj){
+
+    this.after_update_call                      =   false;
+
+    for(var i in this.schedule_list){
+        if(this.schedule_list[i].schedule_id    ===     schedule_obj.schedule_id){
+            this.schedule_list[i]               =       schedule_obj;
+        }
+    }
+
+    var     formatted_schedule_list =       this.getScheduleSessionFormat();
+
+    ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
+
+    $([document.documentElement, document.body]).animate({
+        scrollTop: $("#get_schedule_session_"+this.schedule_id).offset().top
+    }, 2000);
+
+    $("#get_schedule_session_"+this.schedule_id).addClass('updated-schedule-session');
+
 }
 
 ScheduleObj.prototype.deleteScheduleSession      =   function(schedule_id){
