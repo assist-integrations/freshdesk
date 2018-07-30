@@ -31,7 +31,9 @@
         <span class="secondary-message">
             Please Login or Create an account.
         </span>
-        <input type="button" class="primary-btn" value="Log In" onclick="AssistUtil.assistObj.openLoginPage()" />
+        <div class="btn-container">
+            <input type="button" class="primary-btn" value="Log In" onclick="AssistUtil.assistObj.openLoginPage()" />
+        </div>
     </script>
 
     <!-- app not installed page  -->
@@ -39,7 +41,9 @@
         <span class="primary-message">
             Looks like you have not completed your authorization process.
         </span>
-        <input type="button" class="primary-btn" value="Authorize" onclick="AssistUtil.assistObj.openInstallationPage()" />
+        <div class="btn-container">
+            <input type="button" class="primary-btn" value="Authorize" onclick="AssistUtil.assistObj.openInstallationPage()" />
+        </div>div>
     </script>
 
     <!-- Assist Main Template -->
@@ -116,7 +120,7 @@
 
     <!-- Start of the Main Container Assist App Template -->
     
-    <div class="main_container">
+    <div class="main-container">
         <div id="content">
             <div class="preloader"></div>
         </div>
