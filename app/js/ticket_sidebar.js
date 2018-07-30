@@ -204,6 +204,7 @@ AssistObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_detail      =       data.ticket;
     this.ticket_id          =       data.ticket.id;
     this.ticket_subject     =       data.ticket.subject;
+    this.ticket_desc        =       data.ticket.description_text;
 
 };
 
@@ -253,6 +254,12 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
     this.app_detail                 =   response.installed_app_detail;
     
     this.user_role                  =   response.user_role;
+
+    //no org created
+    if(!this.license_details){
+        AssistUtil.showInstallationPage();
+        return;
+    }
 
     // check remote support enabled
     if(!this.license_details.is_enabled){
@@ -423,7 +430,8 @@ AssistObj.prototype.createSupportSession            =   function(){
         customer_email  :   this.customer_email,
         issue_id        :   this.ticket_id,
         issue_topic     :   this.ticket_subject,
-        type            :   this.session_type
+        type            :   this.session_type,
+        issue_description : this.ticket_desc.substr(0,450)
     };
     
     var session_details =   {
