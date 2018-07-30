@@ -24,7 +24,6 @@ body{
 }
 
 .secondary-message{
-    margin-bottom 	: 	15px !important;
     color 			: 	#999;
     line-height     :   34px;
     text-align      :   center;
@@ -120,6 +119,7 @@ body{
 .btn-container  {
     position    :   relative;
     float       :   left;
+    margin-top  :   15px;
     margin-left :   50%;
     transform   :   translateX(-50%);   
 }
