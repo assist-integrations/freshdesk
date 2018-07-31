@@ -404,7 +404,6 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_detail      =       data.ticket;
     this.ticket_id          =       data.ticket.id;
     this.ticket_subject     =       data.ticket.subject;
-    this.ticket_desc 		= 		data.ticket.description_text;
 
 };
 
@@ -754,7 +753,9 @@ ScheduleObj.prototype.hideUpdateScheduleSession 	= 	function(){
 
     this.schedule_id        =       -1;
 
-	this.handleBasicPostMessageCallback();
+	var    formatted_schedule_list =       this.getScheduleSessionFormat();
+
+    ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 };
 
 //end of handling show and hide methods
@@ -1019,6 +1020,9 @@ ScheduleObj.prototype.afterUpdateCallback      =   function(schedule_obj){
 
     for(var i in this.schedule_list){
         if(this.schedule_list[i].schedule_id    ===     schedule_obj.schedule_id){
+            
+            schedule_obj.issue_id               =       this.schedule_list[i].issue_id;
+
             this.schedule_list[i]               =       schedule_obj;
         }
     }
@@ -1032,6 +1036,11 @@ ScheduleObj.prototype.afterUpdateCallback      =   function(schedule_obj){
     }, 2000);
 
     $("#get_schedule_session_"+this.schedule_id).addClass('updated-schedule-session');
+
+    setTimeout(function(){
+        $("#get_schedule_session_"+this.schedule_id).removeClass('updated-schedule-session');
+        this.schedule_id    =   -1;
+    }.bind(this),3000);
 
 };
 
@@ -1062,7 +1071,9 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
         ScheduleUtil.showSuccessMessageContainer('Schedule session successfully delete.');
 
-        this.handleBasicPostMessageCallback();
+        var     formatted_schedule_list =       this.getScheduleSessionFormat();
+
+        ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 
 	}else{
 

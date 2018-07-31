@@ -311,7 +311,6 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
     this.ticket_detail      =       data.ticket;
     this.ticket_id          =       data.ticket.id;
     this.ticket_subject     =       data.ticket.subject;
-    this.ticket_desc 		= 		data.ticket.description_text;
 
 };
 
