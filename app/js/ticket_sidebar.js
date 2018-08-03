@@ -200,7 +200,7 @@ AssistObj.prototype.setFDTicketDetails = function(){
     this.fd_client.data.get("ticket").then(
         this.setFDTicketDetailsCallback,
         function(exc){
-            console.log(exc);
+            // console.log(exc);
         });
 };
 
@@ -221,7 +221,7 @@ AssistObj.prototype.setFDCustomerDetails = function(){
     this.fd_client.data.get("requester").then(
         this.setFDCustomerDetailsCallback,
         function(exc){
-            console.log(exc);
+            // console.log(exc);
         });
 };
 
@@ -463,8 +463,6 @@ AssistObj.prototype.createSupportSession            =   function(){
 };
 
 AssistObj.prototype.createSupportSessionCallback    =   function(response){
-    console.log(response.success);
-    console.log(response.success.representation);
     if(response.success){
         var technicianURL                   =   response.success.representation.technician_url;
         this.login_window.location.href     =   technicianURL;  
