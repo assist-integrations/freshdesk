@@ -17,6 +17,7 @@ var  AssistUtil  =   {};
 function AssistObj(client){
     //assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
+    this.get_domain_url  =   "https://assist.zoho.com/integAppGetDomain";
     this.server          =   "https://assist.zoho.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
@@ -78,18 +79,22 @@ AssistObj.prototype.init = function(){
 //Start of the Assist Server Setting
 
 AssistObj.prototype.setAssistServerURL = function(){
-    this.fd_client.iparams.get("domain").then(
-        this.setAssistServerURLCallback,
-        function(exc){
-            console.log(exc);
-        });
+    // this.fd_client.iparams.get("domain").then(
+    //     this.setAssistServerURLCallback,
+    //     function(exc){
+    //         console.log(exc);
+    //     });
+
+    //calling assist integration iframe
+    var     iframe_ele      =   document.getElementById("get_domain_iframe");
+    iframe_ele.src          =   this.get_domain_url;
 };
 
-AssistObj.prototype.setAssistServerURLCallback = function(data){
+AssistObj.prototype.setAssistServerURLCallback = function(){
 
-    if(data.domain      ===  "EU"){
-        this.domain    =   "eu";
-    }
+    // if(data.domain      ===  "EU"){
+    //     this.domain    =   "eu";
+    // }
 
     //calling assist integration iframe
     this.server_url         =   this.server+this.domain;
@@ -144,6 +149,19 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
     
     var response                    =   event.data;
 
+    if(response.get_domain){
+
+        if(!response.get_domain.domain){
+            AssistUtil.showLoginPage();
+            return;
+        }
+
+        this.domain     =   response.get_domain.domain;
+        this.setAssistServerURLCallback();
+
+        return;
+    }
+
     //assigning variables from post messages
     this.signed_in                  =   response.signedIn;
 
@@ -185,7 +203,7 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
 AssistObj.prototype.openLoginPage   =   function(){
 
     //init login window if closed
-    this.login_window                       =       window.open(this.server_url+"/html/blank.html","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
+    this.login_window                       =       window.open("https://assist.zoho.com/integAppDomainRedirection","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);

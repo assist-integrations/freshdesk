@@ -249,6 +249,7 @@ function ScheduleObj(client){
 
 	//assist details
     this.app_identity    =   "79202e7e27a30660111edd8d6a56d710119474a5";
+    this.get_domain_url  =   "https://assist.zoho.com/integAppGetDomain";
     this.server          =   "https://assist.zoho.";
     this.domain          =   "com";
     this.iframe_url      =   "/assist-integration?app_identity="+this.app_identity;
@@ -367,18 +368,22 @@ ScheduleObj.prototype.init = function() {
 //Start of the Assist Server Setting
 
 ScheduleObj.prototype.setAssistServerURL = function(){
-    this.fd_client.iparams.get("domain").then(
-        this.setAssistServerURLCallback,
-        function(exc){
-            //console.log(exc);
-        });
+    // this.fd_client.iparams.get("domain").then(
+    //     this.setAssistServerURLCallback,
+    //     function(exc){
+    //         //console.log(exc);
+    //     });
+
+    //calling assist integration iframe
+    var     iframe_ele      =   document.getElementById("get_domain_iframe");
+    iframe_ele.src          =   this.get_domain_url;
 };
 
-ScheduleObj.prototype.setAssistServerURLCallback = function(data){
+ScheduleObj.prototype.setAssistServerURLCallback = function(){
 
-    if(data.domain      ===  	"EU"){
-        this.domain    	=   	"eu";
-    }
+    // if(data.domain      ===  	"EU"){
+    //     this.domain    	=   	"eu";
+    // }
 
     //calling assist integration iframe
     this.server_url         =   this.server+this.domain;
@@ -764,6 +769,19 @@ ScheduleObj.prototype.hideUpdateScheduleSession 	= 	function(){
 ScheduleObj.prototype.handlePostMessageCommunication = function(event){
     
     var response                    =   event.data;
+
+    if(response.get_domain){
+
+        if(!response.get_domain.domain){
+            AssistUtil.showLoginPage();
+            return;
+        }
+
+        this.domain     =   response.get_domain.domain;
+        this.setAssistServerURLCallback();
+
+        return;
+    }
 
     //assigning variables from post messages
     this.signed_in                  =   response.signedIn;
