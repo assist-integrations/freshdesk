@@ -11,7 +11,9 @@ $(document).ready( function() {
 });
 
 //Assist Util for handling template and global obj's
-var  AssistUtil  =   {};
+var  AssistUtil  =   {
+    integration_feature       :   "INTEGRATIONS"
+};
 
 
 function AssistObj(client){
