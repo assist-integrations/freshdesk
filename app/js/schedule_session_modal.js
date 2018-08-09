@@ -698,7 +698,7 @@ ScheduleObj.prototype.scheduleSessionTextToAddNotes      =   function(technician
 
 	var url_link 					= 	"<div><a href=\""+technician_url+"\">Start Session</a></div>";
 
-	return 'You have scheduled a remote support session to be held at '+ formatted_schedule_time +'. Click the below link to join the session at the scheduled time.<br><br>'+ url_link;
+	return 'You have scheduled a remote support session at '+ formatted_schedule_time +'. Click the link below to start the session at the scheduled time. <br><br>'+ url_link;
 };
 
 ScheduleObj.prototype.createScheduleSessionCallback      =   function(response){

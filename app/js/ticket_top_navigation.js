@@ -292,18 +292,18 @@ AssistObj.prototype.createSupportSession            =   function(){
 
 	//opening login page
 	if(!this.signed_in){
-		this.showFDInfoNotification("Looks like you haven't logged into Zoho Assist.");
+		this.showFDInfoNotification("Please log in to Zoho Assist and try again.");
         return;
     }
 
     // check for app installation in assist
     if(!this.license_details){
-        this.showFDInfoNotification("Looks like you have not completed your authorization process.");
+        this.showFDInfoNotification("You haven't completed your configuration. Please complete the configuration process and try again.");
         return;
     }
 
     if(!this.checkForIntegrationgFeature()){
-        this.showFDInfoNotification("Freshdesk Integration is available in Remote Support (Standard) and above.");
+        this.showFDInfoNotification("Zoho Assist integration with Freshdesk is only available in Remote Support (Standard) and above.");
         return;
     }
 
@@ -321,7 +321,7 @@ AssistObj.prototype.createSupportSession            =   function(){
 
     // check for app installation in assist
     if(!this.app_detail.installed_app_details.enabled){
-        this.showFDInfoNotification("Integration with Freshdesk has been disabled in Zoho Assist.");
+        this.showFDInfoNotification("Integration with Zoho Assist has been disabled.");
         return;
     }
     

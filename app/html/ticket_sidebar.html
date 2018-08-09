@@ -25,12 +25,9 @@
     <!-- Login Page Of Assist -->
     <script id="login_template" type="text/x-handlebars-template">
         <span class="primary-message">
-            Looks like you haven't logged into Zoho Assist.
+            Please log in to Zoho Assist and try again.
         </span>
         <br />
-        <span class="secondary-message">
-            Please Login or Create an account.
-        </span>
         <div class="btn-container">
             <input type="button" class="primary-btn" value="Log In" onclick="AssistUtil.assistObj.openLoginPage()" />
         </div>
@@ -39,10 +36,10 @@
     <!-- app not installed page  -->
     <script id="app_not_installed_template" type="text/x-handlebars-template">
         <span class="primary-message">
-            Looks like you have not completed your authorization process.
+            You haven't completed your configuration. Please complete the configuration process and try again.
         </span>
         <div class="btn-container">
-            <input type="button" class="primary-btn" value="Authorize" onclick="AssistUtil.assistObj.openInstallationPage()" />
+            <input type="button" class="primary-btn" value="Configure" onclick="AssistUtil.assistObj.openInstallationPage()" />
         </div>
     </script>
 

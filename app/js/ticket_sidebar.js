@@ -30,7 +30,7 @@ var  AssistUtil  =   {
         var template    =   Handlebars.compile(source);
         var context     =   {
             primary_message     :   "You do not have the permission to initiate a session.", 
-            secondary_message   :   "Kindly contact your Administrator."
+            secondary_message   :   "Contact your administrator for more information."
         };
         var html        =   template(context);
         $("#content").html(html);
@@ -51,8 +51,8 @@ var  AssistUtil  =   {
         var source      =   $("#message_template").html();
         var template    =   Handlebars.compile(source);
         var context     =   {
-            primary_message     :   "Integration with Freshdesk has been disabled.", 
-            secondary_message   :   "Kindly contact your Administrator."
+            primary_message     :   "Integration with Zoho Assist has been disabled.",
+            secondary_message   :   "Contact your administrator for more information."
         };
         var html        = template(context);
         $("#content").html(html);
@@ -439,7 +439,7 @@ AssistObj.prototype.receiveFDInterMessage  =   function(event){
 AssistObj.prototype.createSupportSession            =   function(){
 
     if(!this.checkForIntegrationgFeature()){
-        this.showFDInfoNotification("Freshdesk Integration is available in Remote Support (Standard) and above.");
+        this.showFDInfoNotification("Zoho Assist integration with Freshdesk is only available in Remote Support (Standard) and above.");
         return;
     }
     
@@ -474,7 +474,7 @@ AssistObj.prototype.createSupportSessionCallback    =   function(response){
 AssistObj.prototype.createScheduleSession      =   function(){
 
     if(!this.checkForScheduleSessionFeature()){
-        this.showFDInfoNotification("Schedule session is available in Remote Support (Professional) and above.");
+        this.showFDInfoNotification("Scheduling a remote support session is only available in Remote Support (Professional) and above.");
         return;
     }
 
