@@ -314,7 +314,7 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
 AssistObj.prototype.openLoginPage   =   function(){
 
     //init login window if closed
-    this.login_window                       =       window.open("https://assist.zoho.com/integAppDomainRedirection","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
+    this.login_window                       =       window.open("https://assist.zoho.com/integAppDomainRedirection","_blank");
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);
