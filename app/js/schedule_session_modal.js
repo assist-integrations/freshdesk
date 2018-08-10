@@ -246,7 +246,7 @@ function ScheduleObj(client){
     this.selectRemainder 				= 	 this.selectRemainder.bind(this);
     this.showRemainders 				= 	 this.showRemainders.bind(this);
     this.showRemainderTimeContainer 	= 	 this.showRemainderTimeContainer.bind(this);
-    this.hideRemainingTimeContainer 	=  	 this.hideRemainingTimeContainer.bind(this);
+    this.hideRemainderTimeContainer 	= 	 this.hideRemainderTimeContainer.bind(this);
 
     this.scheduleSessionTextToAddNotes 	=    this.scheduleSessionTextToAddNotes.bind(this);
 
@@ -269,6 +269,22 @@ ScheduleObj.prototype.init = function(){
     this.setFDCustomerDetails();
 
     this.fd_client.instance.resize({ height: "500px" });
+
+    $(document).click(function(e){
+    	
+    	var id 		= 	$(e.target).attr('id');
+    	
+    	if(!(id 	===	'schedule_time_id' || id 	=== 'schedule_timezone_id' || id 	=== 'schedule_remainder_id')){
+
+    	 	this.hideAvailableTimeZones();
+	 	
+	 		this.hideRemainderTimeContainer();
+	 	
+	 		this.hideRemainingTimeContainer();
+
+    	}
+
+	}.bind(this));
 
 };
 
@@ -351,6 +367,10 @@ ScheduleObj.prototype.switchAvailableTimezone = function(){
 	}else{
 	
 		this.showAvailableTimeZones();
+
+		this.hideRemainingTimeContainer();
+
+		this.hideRemainderTimeContainer();
 	
 	}
 
@@ -446,6 +466,10 @@ ScheduleObj.prototype.showTime 	= 	function() {
 		return;
 	}
 
+	this.hideAvailableTimeZones();
+
+	this.hideRemainderTimeContainer();
+
 	var 	now 			= 		ScheduleUtil.getNearestMinutes(this.selected_timezone);
 
 	var 	now_end_time 	= 		moment.tz(now.unix()*1000,this.selected_timezone).hours(23).minutes(59).seconds(59).unix()*1000;
@@ -534,6 +558,10 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 		return;
 	}
 
+	this.hideAvailableTimeZones();
+
+	this.hideRemainingTimeContainer();
+
 	var 	now 				= 		moment.tz(this.selected_timezone);
 
 	var minutes_diff 			= 		this.display_date.diff(now,'minutes');
@@ -587,6 +615,10 @@ ScheduleObj.prototype.remianderList 	= 	function(display_time, multiply_time,tim
 };
 
 ScheduleObj.prototype.showRemainderTimeContainer 	=   function(show_time_list){
+
+	this.show_remainder_time	= 	true;
+
+	this.hideAvailableTimeZones();
 
 	this.show_remainder_time	= 	true;
 

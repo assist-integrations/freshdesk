@@ -324,7 +324,7 @@ function ScheduleObj(client){
     this.selectRemainder 				= 	 this.selectRemainder.bind(this);
     this.showRemainders 				= 	 this.showRemainders.bind(this);
     this.showRemainderTimeContainer 	= 	 this.showRemainderTimeContainer.bind(this);
-    this.hideRemainingTimeContainer 	=  	 this.hideRemainingTimeContainer.bind(this);
+    this.hideRemainderTimeContainer     =    this.hideRemainderTimeContainer.bind(this);
 
     this.showUpdateScheduleSession 		= 	 this.showUpdateScheduleSession.bind(this);
     this.hideUpdateScheduleSession 		= 	 this.hideUpdateScheduleSession.bind(this);
@@ -362,6 +362,22 @@ ScheduleObj.prototype.init = function() {
     this.setFDCustomerDetails();
 
     this.fd_client.instance.resize({ height: "500px" });
+
+    $(document).click(function(e){
+        
+        var id      =   $(e.target).attr('id');
+        
+        if(!(id     === 'schedule_time_id' || id    === 'schedule_timezone_id' || id    === 'schedule_remainder_id')){
+
+            this.hideAvailableTimeZones();
+        
+            this.hideRemainderTimeContainer();
+        
+            this.hideRemainingTimeContainer();
+
+        }
+
+    }.bind(this));
 
 };
 
@@ -444,6 +460,10 @@ ScheduleObj.prototype.switchAvailableTimezone = function(){
 	}else{
 	
 		this.showAvailableTimeZones();
+
+        this.hideRemainderTimeContainer();
+
+        this.hideRemainingTimeContainer();
 	
 	}
 
@@ -551,6 +571,10 @@ ScheduleObj.prototype.showTime 	= 	function() {
 		return;
 	}
 
+    this.hideRemainderTimeContainer();
+
+    this.hideAvailableTimeZones();
+
 	var 	now 			= 		ScheduleUtil.getNearestMinutes(this.selected_timezone);
 
 	var 	now_end_time 	= 		moment.tz(now.unix()*1000,this.selected_timezone).hours(23).minutes(59).seconds(59).unix()*1000;
@@ -638,6 +662,10 @@ ScheduleObj.prototype.showRemainders 	= 	function() {
 		this.hideRemainderTimeContainer();
 		return;
 	}
+
+    this.hideAvailableTimeZones();
+
+    this.hideRemainingTimeContainer();
 
 	var 	now 				= 		moment.tz(this.selected_timezone);
 
@@ -1090,6 +1118,14 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
         ScheduleUtil.showSuccessMessageContainer('Schedule session successfully delete.');
 
         var     formatted_schedule_list =       this.getScheduleSessionFormat();
+
+        //no-schedule-session
+        if(formatted_schedule_list.length    <=      0){
+            
+            ScheduleUtil.showNoScheduleSessionContainer();
+
+            return;
+        }
 
         ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
 

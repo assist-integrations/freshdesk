@@ -71,7 +71,7 @@
                     <span class="labelspan">Timezone</span>
                 </div>
                 <br>
-                <span class="label-value date-time-dropdown" onclick="ScheduleUtil.scheduleObj.switchAvailableTimezone();">{{timezone}}</span>
+                <span class="label-value date-time-dropdown" id="schedule_timezone_id" onclick="ScheduleUtil.scheduleObj.switchAvailableTimezone();">{{timezone}}</span>
                 <div class="available-timezone-container" id="available_timezone_with_filter">
                     <span><input type="text" id="timezone_filter_input" placeholder="Search" value="" onkeyup="ScheduleUtil.scheduleObj.filterAvailableTimezones();" /></span>
                     <div id="available_timezone"></div>
@@ -80,7 +80,7 @@
             <div class="schedule-field">
                 <div style="float:left;width:30%;">
                     <div>
-                        <span class="labelspan">Data</span>
+                        <span class="labelspan">Date</span>
                     </div>
                     <br>
                     <span class="label-value date-time-dropdown" id="schedule_date_id">{{display_date}}</span>
