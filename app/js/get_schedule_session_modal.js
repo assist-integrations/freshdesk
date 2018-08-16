@@ -1053,7 +1053,7 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     
     if(response.success){
 
-        ScheduleUtil.showSuccessMessageContainer('Schedule session successfully updated.');
+        ScheduleUtil.showSuccessMessageContainer('Scheduled session was updated successfully.');
 
         this.after_update_call     =    true;
 
@@ -1121,7 +1121,7 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
 		this.removeScheduleObj(this.delete_schedule_id);
 
-        ScheduleUtil.showSuccessMessageContainer('Schedule session successfully delete.');
+        ScheduleUtil.showSuccessMessageContainer('Scheduled session was deleted successfully.');
 
         var     formatted_schedule_list =       this.getScheduleSessionFormat();
 

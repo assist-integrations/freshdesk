@@ -413,7 +413,7 @@ AssistObj.prototype.receiveFDInterMessage  =   function(event){
     
     if(data.message.location    ===     'create_schedule_session_dialog'  &&  data.sender.location  ===     'dialog'){
 
-        this.showFDSuccessNotification('Successfully scheduled a session.');
+        this.showFDSuccessNotification('Session has been scheduled successfully.');
 
         this.fd_client.interface.trigger('click',{id: "note", text: data.message.note_text, isPublic: false});
     }
