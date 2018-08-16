@@ -89,8 +89,14 @@ AssistObj.prototype.setAssistServerURL = function(){
 
 AssistObj.prototype.setAssistServerURLCallback = function(data){
 
-    if(data.domain      ===  "EU"){
-        this.domain    =   "eu";
+    if(data.domain            ===   "EU"){
+        
+        this.domain             =   "eu";
+    
+    }else if(data.domain      ===   "IN"){
+        
+        this.domain             =   "in";
+    
     }
 
     //calling assist integration iframe

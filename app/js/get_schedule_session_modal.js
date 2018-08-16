@@ -392,8 +392,14 @@ ScheduleObj.prototype.setAssistServerURL = function(){
 
 ScheduleObj.prototype.setAssistServerURLCallback = function(data){
 
-    if(data.domain      ===  	"EU"){
-        this.domain    	=   	"eu";
+    if(data.domain            ===   "EU"){
+        
+        this.domain             =   "eu";
+    
+    }else if(data.domain      ===   "IN"){
+        
+        this.domain             =   "in";
+    
     }
 
     //calling assist integration iframe
