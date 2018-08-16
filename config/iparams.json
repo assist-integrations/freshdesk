@@ -1,7 +1,7 @@
 {
     "domain": {
       "display_name": "Select the domain name that you have been using with Zoho Assist",
-      "description": "For e.g., if your URL is \"assist.zoho.com.us\" then select your domain as US, if your URL is \"assist.zoho.com.eu\" then select your domain as EU, if your URL is \"assist.zoho.com.in\" then select your domain as IN.",
+      "description": "For e.g., if your URL is \"assist.zoho.com\" \n then select your domain as US, \n if your URL is \"assist.zoho.eu\" then select your domain as EU, if your URL is \"assist.zoho.in\" then select your domain as IN.",
       "type": "radio",
       "options": [
         "US",
