@@ -543,6 +543,15 @@ ScheduleObj.prototype.selectDate 	= 	function(start,end){
 
 	this.display_date 		= 		moment.tz(start.unix()*1000,this.selected_timezone);
 
+    var     now             =       moment.tz(this.selected_timezone);
+
+    var     minutes_diff    =       this.display_date.diff(now,'minutes');
+
+    if(minutes_diff             <=      this.remainder){
+        this.remainder          =       0;
+        this.remainder_text     =       'No remainder';
+    }
+
 	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
 };
@@ -644,6 +653,15 @@ ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
 	this.display_date		= 	moment.tz(timestamp,this.selected_timezone);
+
+    var     now             =       moment.tz(this.selected_timezone);
+
+    var     minutes_diff    =       this.display_date.diff(now,'minutes');
+
+    if(minutes_diff             <=      this.remainder){
+        this.remainder          =       0;
+        this.remainder_text     =       'No remainder';
+    }
 
 	ScheduleUtil.showScheduleMainContainer(this.customer_email, this.ticket_subject, this.ticket_desc, this.selected_timezone, this.display_date, this.remainder_text , this.selectDate);
 
