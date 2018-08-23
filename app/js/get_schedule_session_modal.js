@@ -281,6 +281,7 @@ function ScheduleObj(client){
     this.display_date					= 	null;
     this.remainder 						= 	0;
     this.remainder_text 				= 	'No remainder';
+    this.department_id                  =   -1;
     this.show_available_timezone 		= 	false;
     this.show_remaining_time 			= 	false;
     this.show_remainder_time 			= 	false;
@@ -963,6 +964,8 @@ ScheduleObj.prototype.getScheduleSessionDetailsCallback      =   function(respon
 
     	this.selected_timezone 	 		= 		schedule_obj.context_schedule_timezone;
 
+        this.department_id              =       schedule_obj.department_id;
+
     	this.display_date 				= 		moment.tz(Number(schedule_obj.context_schedule_time) ,this.selected_timezone);
 
     	this.remainder 					= 		schedule_obj.context_schedule_reminder;
@@ -1037,7 +1040,8 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
         time_zone       :   this.selected_timezone,
         reminder       	:   this.remainder,
         schedule_id 	: 	this.schedule_id,
-        identity 		: 	this.context_identity
+        identity 		: 	this.context_identity,
+        department_id   :   this.department_id
     };
     
     var schedule_session_details    =   {
