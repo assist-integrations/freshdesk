@@ -733,7 +733,7 @@ ScheduleObj.prototype.createScheduleSession      =   function(){
 
 	if(!ScheduleUtil.EMAIL_REGEX.test(this.customer_email)){
 		
-        ScheduleUtil.showErrorMessageContainer('Customer Email is incorrect.');
+        ScheduleUtil.showErrorMessageContainer('Please enter a valid email id.');
 		
         return;
 	
@@ -741,7 +741,7 @@ ScheduleObj.prototype.createScheduleSession      =   function(){
 
 	if(this.ticket_subject 	=== '' || this.ticket_subject 	=== null || !this.ticket_subject){
 	
-    	ScheduleUtil.showErrorMessageContainer('Schedule Title is empty.');
+    	ScheduleUtil.showErrorMessageContainer('Title is mandatory to schedule a session.');
 	
     	return;
 	

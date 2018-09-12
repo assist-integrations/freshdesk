@@ -303,7 +303,7 @@ AssistObj.prototype.createSupportSession            =   function(){
 
     // check for app installation in assist
     if(!this.app_detail.installed_app_details){
-    	this.showFDInfoNotification("Looks like you have not completed your authorization process.");
+    	this.showFDInfoNotification("Freshdesk integration is not configured in Zoho Assist. Please complete the configuration process and try again.");
         return;
     }
 
