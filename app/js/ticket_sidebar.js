@@ -446,14 +446,18 @@ AssistObj.prototype.createSupportSession            =   function(){
 
     var iframeVar       =   document.getElementById("post_message_iframe");
     iframeVar.contentWindow.postMessage(session_details,'*');
-    
-    this.login_window   = window.open("","_blank");
 };
 
 AssistObj.prototype.createSupportSessionCallback    =   function(response){
     if(response.success){
-        var technicianURL                   =   response.success.representation.technician_url;
-        this.login_window.location.href     =   technicianURL;  
+        var technicianURL               =   response.success.representation.technician_url;
+        
+        var session_window              =   window.open(technicianURL , '_blank' );
+        
+        if(session_window   ===  null){
+            this.showFDInfoNotification('Pop-up blocked to start session.Select always allow pop-ups and blocks.');
+        }
+    
     }else{
         this.showFDDangerNotification("Error occured during session creation. Please contact support@zohoassist.com.");
     }

@@ -10,6 +10,8 @@ $(document).ready( function() {
 
 var  ScheduleUtil  =   {
 
+	EMAIL_REGEX 			: 	/[a-zA-Z0-9]([\w\-\.\+\']*)@([\w\-\.]*)(\.[a-zA-Z]{2,8}(\.[a-zA-Z]{2}){0,2})/g,
+
 	getAvailableTimezones   :   function(){
         var availableTimezone      =   moment.tz.names();
         
@@ -63,9 +65,10 @@ var  ScheduleUtil  =   {
     },
 
     getNearestMinutes 		: 	function(timezone){
+	    
 	    var mom_obj     =    moment.tz(timezone); 
 	    
-	    var minutes     =    mom_obj.add(5,'minutes').minutes();
+	    var minutes     =    mom_obj.add('minutes',5).minutes();
 	    
 	    if(minutes > 0 && minutes <15){
 	    
@@ -81,7 +84,7 @@ var  ScheduleUtil  =   {
 	    
 	    }else if(minutes > 45){
 	    
-	        mom_obj.add(60-minutes,'minutes');
+	        mom_obj.add('minutes', 60-minutes);
 	    
 	    }
 
@@ -164,13 +167,33 @@ var  ScheduleUtil  =   {
 
 		$('#schedule_date_id').daterangepicker({
 			minDate             :   ScheduleUtil.getNearestMinutes(selected_timezone),
-	        maxDate             :   moment.tz(selected_timezone).add(1,'year'),
+	        maxDate             :   moment.tz(selected_timezone).add('year' ,1),
 	        singleDatePicker    :   true,
 	        drops 				: 	"up",
 	        timeZone            :   selected_timezone
 		}, callback);
 
-	}
+	}, 
+
+	showErrorMessageContainer(message){
+
+        $('#top_error_message').show();
+
+        $('#top_error_message').html(message);
+
+        setTimeout(function(){
+            ScheduleUtil.hideErrorMessageContainer();
+        },3000);
+    
+    },
+
+    hideErrorMessageContainer(){
+
+        $('#top_error_message').html('');
+
+        $('#top_error_message').hide();
+    
+    }
 
 };
 
@@ -273,7 +296,7 @@ ScheduleObj.prototype.init = function(){
     	
     	var id 		= 	$(e.target).attr('id');
     	
-    	if(!(id 	===	'schedule_time_id' || id 	=== 'schedule_timezone_id' || id 	=== 'schedule_remainder_id')){
+    	if(!(id 	===	'schedule_time_id' || id 	=== 'schedule_timezone_id' || id 	=== 'schedule_remainder_id' || id === 'timezone_filter_input')){
 
     	 	this.hideAvailableTimeZones();
 	 	
@@ -507,12 +530,12 @@ ScheduleObj.prototype.showTime 	= 	function() {
 
 	for(var i=0;i<diff_minutes-1;i++){
 		
-		display_date_clone.add(15,'minutes');
-		
 		show_time_list.push({
 			timestamp 		: 	display_date_clone.unix()*1000,
 			full_text_time 	:	display_date_clone.format('h:mm A z')
 		});
+
+		display_date_clone.add( 'minutes' , 15 );
 	}
 
 	this.showRemainingTimeContainer(show_time_list);
@@ -544,7 +567,16 @@ ScheduleObj.prototype.hideRemainingTimeContainer 	=   function(){
 
 ScheduleObj.prototype.selectTime 	= 	function(timestamp) {
 
-	this.display_date		= 	moment.tz(timestamp,this.selected_timezone);
+	this.display_date		= 	    moment.tz(timestamp,this.selected_timezone);
+
+    var     now             =       moment.tz(this.selected_timezone);
+
+    var     minutes_diff    =       this.display_date.diff(now,'minutes');
+
+    if(minutes_diff             <=      this.remainder){
+        this.remainder          =       0;
+        this.remainder_text     =       'No remainder';
+    }
 
 	this.handleBasicPostMessageCallback();
 
@@ -689,6 +721,31 @@ ScheduleObj.prototype.handlePostMessageCommunication = function(event){
 };
 
 ScheduleObj.prototype.createScheduleSession      =   function(){
+
+    var     now     =   moment.tz(this.selected_timezone);
+
+    if(now.unix()   >=  this.display_date.unix()){
+
+        ScheduleUtil.showErrorMessageContainer('Schedule time is in past.');
+
+        return;
+    }
+
+	if(!ScheduleUtil.EMAIL_REGEX.test(this.customer_email)){
+		
+        ScheduleUtil.showErrorMessageContainer('Customer Email is incorrect.');
+		
+        return;
+	
+    }
+
+	if(this.ticket_subject 	=== '' || this.ticket_subject 	=== null || !this.ticket_subject){
+	
+    	ScheduleUtil.showErrorMessageContainer('Schedule Title is empty.');
+	
+    	return;
+	
+    }
     
     var data 		= 	{
         app_identity    :   this.app_identity,
