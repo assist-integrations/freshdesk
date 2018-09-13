@@ -9,8 +9,6 @@ $(document).ready( function() {
 
 var  ScheduleUtil  =   {
 
-    EMAIL_REGEX             :    /[a-zA-Z0-9]([\w\-\.\+\']*)@([\w\-\.]*)(\.[a-zA-Z]{2,8}(\.[a-zA-Z]{2}){0,2})/g,
-
 	showPreloaderComponent 	: 	function(){
 		$("#content").html("<div class=\"preloader\"></div>");
 	},
@@ -524,7 +522,7 @@ ScheduleObj.prototype.selectTimezone 	= 	function(timezone){
 
 };
 
-ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
+ScheduleObj.prototype.selectCustomerEmail 	= 	function(){
 
 	var value 						= 	$('#customer_email_id').val();
 
@@ -532,7 +530,7 @@ ScheduleObj.prototype.selectCustomerEmail 	= 	function(timezone){
 
 };
 
-ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
+ScheduleObj.prototype.selectTicketSubject 	= 	function(){
 
 	var value 						= 	$('#ticket_subject_id').val();
 
@@ -540,7 +538,7 @@ ScheduleObj.prototype.selectTicketSubject 	= 	function(timezone){
 
 };
 
-ScheduleObj.prototype.selectTicketDescription 	= 	function(timezone){
+ScheduleObj.prototype.selectTicketDescription 	= 	function(){
 
 	var value 						= 	$('#ticket_description_id').val();
 
@@ -1029,7 +1027,13 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
         return;
     }
 
-    if(!ScheduleUtil.EMAIL_REGEX.test(this.customer_email)){
+    this.customer_email             =       $('#customer_email_id').val();
+
+    this.ticket_subject             =       $('#ticket_subject_id').val();
+
+    var email_regex                 =       /[a-zA-Z0-9]([\w\-\.\+\']*)@([\w\-\.]*)(\.[a-zA-Z]{2,8}(\.[a-zA-Z]{2}){0,2})/g;
+
+    if(!email_regex.test(this.customer_email)){
         
         ScheduleUtil.showErrorMessageContainer('Customer Email is incorrect.');
         
