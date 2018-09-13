@@ -455,7 +455,7 @@ AssistObj.prototype.createSupportSessionCallback    =   function(response){
         var session_window              =   window.open(technicianURL , '_blank' );
         
         if(session_window   ===  null){
-            this.showFDInfoNotification('Pop-up blocked to start session.Select always allow pop-ups and blocks.');
+            this.showFDInfoNotification('In order to start a session please allow pop-ups for this page.');
         }
     
     }else{

@@ -1035,7 +1035,7 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
 
     if(!email_regex.test(this.customer_email)){
         
-        ScheduleUtil.showErrorMessageContainer('Customer Email is incorrect.');
+        ScheduleUtil.showErrorMessageContainer('Please enter a valid email address.');
         
         return;
     
@@ -1043,7 +1043,7 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
 
     if(this.ticket_subject  === '' || this.ticket_subject   === null || !this.ticket_subject){
         
-        ScheduleUtil.showErrorMessageContainer('Schedule Title is empty.');
+        ScheduleUtil.showErrorMessageContainer('Please fill in the Title field to schedule a session.');
         
         return;
     }
