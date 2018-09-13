@@ -72,7 +72,7 @@ var  ScheduleUtil  =   {
     getNearestMinutes 		: 	function(timezone){
 	    var mom_obj     =    moment.tz(timezone); 
 	    
-	    var minutes     =    mom_obj.add('minutes',5).minutes();
+	    var minutes     =    mom_obj.add('minutes',15).minutes();
 	    
 	    if(minutes > 0 && minutes <15){
 	    
@@ -1074,7 +1074,7 @@ ScheduleObj.prototype.updateScheduleSessionCallback      =   function(response){
     
     if(response.success){
 
-        ScheduleUtil.showSuccessMessageContainer('Scheduled session was updated successfully.');
+        ScheduleUtil.showSuccessMessageContainer('Scheduled session was updated successfully.');
 
         this.after_update_call     =    true;
 

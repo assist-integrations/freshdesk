@@ -68,7 +68,7 @@ var  ScheduleUtil  =   {
 	    
 	    var mom_obj     =    moment.tz(timezone); 
 	    
-	    var minutes     =    mom_obj.add('minutes',5).minutes();
+	    var minutes     =    mom_obj.add('minutes',15).minutes();
 	    
 	    if(minutes > 0 && minutes <15){
 	    
