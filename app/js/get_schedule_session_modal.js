@@ -1140,29 +1140,33 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
 	if(response.success){
 
-		this.removeScheduleObj(this.delete_schedule_id);
+        $('#get_schedule_session_'+this.delete_schedule_id).fadeOut( 1000 , function(){
 
-        ScheduleUtil.showSuccessMessageContainer('Scheduled session was deleted successfully.');
+            this.removeScheduleObj(this.delete_schedule_id);
 
-        var     formatted_schedule_list =       this.getScheduleSessionFormat();
+            ScheduleUtil.showSuccessMessageContainer('Scheduled session was deleted successfully.');
 
-        //no-schedule-session
-        if(formatted_schedule_list.length    <=      0){
-            
-            ScheduleUtil.showNoScheduleSessionContainer();
+            var     formatted_schedule_list =       this.getScheduleSessionFormat();
 
-            return;
-        }
+            //no-schedule-session
+            if(formatted_schedule_list.length    <=      0){
+                
+                ScheduleUtil.showNoScheduleSessionContainer();
 
-        ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
+                return;
+            }
+
+            ScheduleUtil.showScheduleSessionDetailsContainer(formatted_schedule_list , this.show_load_more);
+
+            this.delete_schedule_id     =   -1;
+
+        }.bind(this) );
 
 	}else{
 
         ScheduleUtil.showErrorMessageContainer('Oops! Some error occured.Please contact support@zohoassist.com.');
     
     }
-
-    this.delete_schedule_id     =   -1;
 
 };
 
