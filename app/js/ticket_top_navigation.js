@@ -12,7 +12,7 @@ $(document).ready( function() {
 
 //Assist Util for handling template and global obj's
 var  AssistUtil  =   {
-    integration_feature       :   "INTEGRATIONS"
+    integration_feature       :   "INTEGRATIONS",
 };
 
 
@@ -82,7 +82,7 @@ AssistObj.prototype.init = function(){
 AssistObj.prototype.setAssistServerURL = function(){
     this.fd_client.iparams.get("domain").then(
         this.setAssistServerURLCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -96,6 +96,18 @@ AssistObj.prototype.setAssistServerURLCallback = function(data){
     }else if(data.domain      ===   "IN"){
         
         this.domain             =   "in";
+    
+    }else if(data.domain      ===   "JP"){
+        
+        this.domain             =   "jp";
+    
+    }else if(data.domain      ===   "AU"){
+        
+        this.domain             =   "com.au";
+    
+    }else if(data.domain      ===   "CN"){
+        
+        this.domain             =   "com.cn";
     
     }
 
@@ -113,7 +125,7 @@ AssistObj.prototype.setAssistServerURLCallback = function(data){
 AssistObj.prototype.setFDTicketDetails = function(){
     this.fd_client.data.get("ticket").then(
         this.setFDTicketDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -134,7 +146,7 @@ AssistObj.prototype.setFDTicketDetailsCallback = function(data){
 AssistObj.prototype.setFDCustomerDetails = function(){
     this.fd_client.data.get("requester").then(
         this.setFDCustomerDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -152,9 +164,12 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
     
     var response                    =   event.data;
 
+    if(undefined == response.signedIn){
+        return;
+    }
+
     //assigning variables from post messages
     this.signed_in                  =   response.signedIn;
-
     if(!this.signed_in){
         return;
     }
@@ -164,7 +179,6 @@ AssistObj.prototype.handlePostMessageCommunication = function(event){
     this.license_details            =   this.user_details.remote_support_license;
     
     this.app_detail                 =   response.installed_app_detail;
-
 
     if(!this.license_details){
         return;
@@ -202,7 +216,7 @@ AssistObj.prototype.openLoginPage   =   function(){
 AssistObj.prototype.openInstallationPage    =       function(){
 
     //init login window if closed
-    this.login_window                       =       window.open(this.server_url+"/assist#/settings/integrations","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
+    this.login_window                       =       window.open(this.server_url+"/app/settings/integrations/freshdesk-support","_blank","toolbar=yes,scrollbars=yes,resizable=yes,top=150,left=350,width=800,height=600");
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);
@@ -277,19 +291,17 @@ AssistObj.prototype.showFDDangerNotification  =   function(message){
 //Start of the Assist API calling and Response from post messages
 
 AssistObj.prototype.createSupportSession            =   function(){
-
 	//opening login page
 	if(!this.signed_in){
 		this.showFDInfoNotification("Please log in to Zoho Assist and try again.");
+        this.openLoginPage();
         return;
     }
-
     // check for app installation in assist
     if(!this.license_details){
         this.showFDInfoNotification("You haven't completed your configuration. Please complete the configuration process and try again.");
         return;
     }
-
     if(!this.checkForIntegrationgFeature()){
         this.showFDInfoNotification("Zoho Assist integration with Freshdesk is only available in Remote Support (Standard) and above.");
         return;

@@ -313,7 +313,7 @@ ScheduleObj.prototype.init = function(){
 ScheduleObj.prototype.setAssistServerURL = function(){
     this.fd_client.iparams.get("domain").then(
         this.setAssistServerURLCallback,
-        function(exc){
+        function(){
             //console.log(exc);
         });
 };
@@ -327,6 +327,18 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
     }else if(data.domain      ===   "IN"){
         
         this.domain             =   "in";
+    
+    }else if(data.domain      ===   "JP"){
+        
+        this.domain             =   "jp";
+    
+    }else if(data.domain      ===   "AU"){
+        
+        this.domain             =   "com.au";
+    
+    }else if(data.domain      ===   "CN"){
+        
+        this.domain             =   "com.cn";
     
     }
 
@@ -344,7 +356,7 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
 ScheduleObj.prototype.setFDTicketDetails = function(){
     this.fd_client.data.get("ticket").then(
         this.setFDTicketDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -364,7 +376,7 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
 ScheduleObj.prototype.setFDCustomerDetails = function(){
     this.fd_client.data.get("requester").then(
         this.setFDCustomerDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -473,7 +485,7 @@ ScheduleObj.prototype.selectTicketDescription 	= 	function(){
 
 };
 
-ScheduleObj.prototype.selectDate 	= 	function(start,end){
+ScheduleObj.prototype.selectDate 	= 	function(start){
 
 	this.display_date 		= 		moment.tz(start.unix()*1000,this.selected_timezone);
 

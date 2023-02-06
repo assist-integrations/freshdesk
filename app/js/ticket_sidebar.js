@@ -76,11 +76,11 @@ var  AssistUtil  =   {
         return template(context);
     },
 
-    getSessionScheduleBtnTemplate    :   function(rs_checked){
+    getSessionScheduleBtnTemplate    :   function(){
         return $("#session_schedule_btn_template").html();
     },
 
-    getScheduleSessionLinkTemplate    :   function(rs_checked){
+    getScheduleSessionLinkTemplate    :   function(){
         return $("#get_schedule_session_template").html();
     },
 
@@ -169,7 +169,7 @@ AssistObj.prototype.init = function(){
 AssistObj.prototype.setAssistServerURL = function(){
     this.fd_client.iparams.get("domain").then(
         this.setAssistServerURLCallback,
-        function(exc){
+        function(){
             //console.log(exc);
         });
 };
@@ -183,6 +183,18 @@ AssistObj.prototype.setAssistServerURLCallback = function(data){
     }else if(data.domain      ===   "IN"){
         
         this.domain             =   "in";
+    
+    }else if(data.domain      ===   "JP"){
+        
+        this.domain             =   "jp";
+    
+    }else if(data.domain      ===   "AU"){
+        
+        this.domain             =   "com.au";
+    
+    }else if(data.domain      ===   "CN"){
+        
+        this.domain             =   "com.cn";
     
     }
 
@@ -200,7 +212,7 @@ AssistObj.prototype.setAssistServerURLCallback = function(data){
 AssistObj.prototype.setFDTicketDetails = function(){
     this.fd_client.data.get("ticket").then(
         this.setFDTicketDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -221,7 +233,7 @@ AssistObj.prototype.setFDTicketDetailsCallback = function(data){
 AssistObj.prototype.setFDCustomerDetails = function(){
     this.fd_client.data.get("requester").then(
         this.setFDCustomerDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -311,7 +323,7 @@ AssistObj.prototype.openLoginPage   =   function(){
 AssistObj.prototype.openInstallationPage    =       function(){
 
     //init login window if closed
-    this.login_window                       =       window.open(this.server_url+"/assist#/settings/integrations/freshdesk-support","_blank");
+    this.login_window                       =       window.open(this.server_url+"/app/settings/integrations/freshdesk-support","_blank");
     
     //set interval for checking login window closed
     this.login_window_check_interval        =       setInterval(this.checkLoginWindowClosed,2000);

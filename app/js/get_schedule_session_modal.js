@@ -386,8 +386,8 @@ ScheduleObj.prototype.init = function() {
 ScheduleObj.prototype.setAssistServerURL = function(){
     this.fd_client.iparams.get("domain").then(
         this.setAssistServerURLCallback,
-        function(exc){
-            //console.log(exc);
+        function(){
+            // console.log(exc);
         });
 };
 
@@ -400,6 +400,18 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
     }else if(data.domain      ===   "IN"){
         
         this.domain             =   "in";
+    
+    }else if(data.domain      ===   "JP"){
+        
+        this.domain             =   "jp";
+    
+    }else if(data.domain      ===   "AU"){
+        
+        this.domain             =   "com.au";
+    
+    }else if(data.domain      ===   "CN"){
+        
+        this.domain             =   "com.cn";
     
     }
 
@@ -417,7 +429,7 @@ ScheduleObj.prototype.setAssistServerURLCallback = function(data){
 ScheduleObj.prototype.setFDTicketDetails = function(){
     this.fd_client.data.get("ticket").then(
         this.setFDTicketDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -437,7 +449,7 @@ ScheduleObj.prototype.setFDTicketDetailsCallback = function(data){
 ScheduleObj.prototype.setFDCustomerDetails = function(){
     this.fd_client.data.get("requester").then(
         this.setFDCustomerDetailsCallback,
-        function(exc){
+        function(){
             // console.log(exc);
         });
 };
@@ -546,7 +558,7 @@ ScheduleObj.prototype.selectTicketDescription 	= 	function(){
 
 };
 
-ScheduleObj.prototype.selectDate 	= 	function(start,end){
+ScheduleObj.prototype.selectDate 	= 	function(start){
 
 	this.display_date 		= 		moment.tz(start.unix()*1000,this.selected_timezone);
 
@@ -1051,9 +1063,9 @@ ScheduleObj.prototype.updateScheduleSession      =   function(){
     this.get_schedule_session_scroll_top        =       $(document).scrollTop().valueOf();
     
     var data 		= 	{
-        app_identity    :   this.app_identity,
+        // app_identity    :   this.app_identity,
         customer_email  :   this.customer_email,
-        issue_id        :   this.ticket_id,
+        // issue_id        :   this.ticket_id,
         title     		:   this.ticket_subject,
         schedule_time   :   this.display_date.unix()*1000,
         notes 		 	: 	this.ticket_desc,
@@ -1176,7 +1188,7 @@ ScheduleObj.prototype.deleteScheduleSessionCallback      =   function(response){
 
 ScheduleObj.prototype.removeScheduleObj      =   function(schedule_id){
 
-    var splice_position     =   this.schedule_list.length;
+    // var splice_position     =   this.schedule_list.length;
     for(var i in this.schedule_list){
         if(this.schedule_list[i].schedule_id    ===     schedule_id){
             this.schedule_list.splice(i,1);

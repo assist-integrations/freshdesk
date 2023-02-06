@@ -1,12 +1,15 @@
 {
     "domain": {
       "display_name": "Select the domain name that you have been using with Zoho Assist",
-      "description": "Select your domain name as \"US\" if your URL is \"assist.zoho.com\", \"EU\" if your domain name is \"assist.zoho.eu\", and \"IN\" if your URL is \"assist.zoho.in\".",
+      "description": "Select your domain name as \"US\" if your URL is \"assist.zoho.com\", \"EU\" if your URL name is \"assist.zoho.eu\", \"IN\" if your URL name is \"assist.zoho.in\", \"JP\" if your URL name is \"assist.zoho.jp\", \"AU\" if your URL name is \"assist.zoho.com.au\", and \"CN\" if your URL is \"assist.zoho.com.cn\".",
       "type": "radio",
       "options": [
         "US",
         "EU",
-        "IN"
+        "IN",
+        "JP",
+        "AU",
+        "CN"
       ],
       "default_value": "US",
       "required": true
